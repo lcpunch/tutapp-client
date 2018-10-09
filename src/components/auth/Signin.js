@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 class Signin extends Component {
+
+  onSubmit = (formProps) => {
+    this.props.signin(formProps);
+  };
+
   render() {
+    const { handleSubmit } = this.props;
     return (
-      <form>
+      <form onSubmit={handleSubmit(this.onSubmit)}>
         <fieldset>
           <label>Email</label>
           <Field
             name="email"
             type="text"
             component="input"
-            autocomplete="none"
+            autoComplete="none"
           />
         </fieldset>
         <fieldset>
@@ -20,12 +29,19 @@ class Signin extends Component {
             name="password"
             type="password"
             component="input"
-            autocomplete="none"
+            autoComplete="none"
           />
         </fieldset>
+        <button>
+          Sign In!
+        </button>
       </form>
     );
   }
 }
 
-export default reduxForm({ form:'signin' })(Signin);
+export default compose(
+  connect(null, actions),
+  reduxForm({ form:'signin' })
+)(Signin);
+
