@@ -8,39 +8,45 @@ class Signin extends Component {
 
   onSubmit = (formProps) => {
     this.props.signin(formProps, () => {
-      this.props.history.push('/courses');
+      this.props.history.push('/programs');
     });
   };
 
   render() {
     const { handleSubmit } = this.props;
     return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
-        <fieldset>
-          <label>Email</label>
-          <Field
-            name="email"
-            type="text"
-            component="input"
-            autoComplete="none"
-          />
-        </fieldset>
-        <fieldset>
-          <label>Password</label>
-          <Field
-            name="password"
-            type="password"
-            component="input"
-            autoComplete="none"
-          />
-        </fieldset>
-        <div>
-          {this.props.errorMessage}
-        </div>
-        <button>
-          Sign In!
-        </button>
-      </form>
+      <div className="container">
+        <form onSubmit={handleSubmit(this.onSubmit)}>
+          <div className="form-group">
+            <label>Email</label>
+            <Field
+              name="email"
+              className="form-control"
+              type="text"
+              component="input"
+              placeholder="Enter email"
+              autoComplete="none"
+            />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <Field
+              name="password"
+              className="form-control"
+              type="password"
+              component="input"
+              placeholder="Enter password"
+              autoComplete="none"
+            />
+          </div>
+          <div>
+            {this.props.errorMessage}
+          </div>
+          <button className="btn btn-primary">
+            Sign In!
+          </button>
+        </form>
+      </div>
     );
   }
 }

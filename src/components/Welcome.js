@@ -3,6 +3,8 @@ import './WelcomeStyle.css';
 
 export default () => {
   return (
-    <div className="wrap">Welcome! Sign in!</div>
+    <div className="container">
+      Welcome! Sign in!
+    </div>
   );
 };

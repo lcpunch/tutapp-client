@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AUTH_USER, AUTH_ERROR } from './types';
+import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS } from './types';
 
 export const signin = (formProps, callback) => async dispatch => {
     try {
@@ -9,10 +9,22 @@ export const signin = (formProps, callback) => async dispatch => {
         localStorage.setItem('token', response.data.success.token);
         callback();
     } catch (e) {
-        dispatch({ type: AUTH_ERROR, payload: 'Incorrect login or password' });
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
 };
 
+export const fetchPrograms = () => async dispatch => {
+    try {
+        let webApiUrl = 'https://tutapp-rs.herokuapp.com/api/programs';
+        let tokenStr = localStorage.getItem('token');
+        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        console.log(response);
+        dispatch({ type: LIST_PROGRAMS, payload: response.data });
+        
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+};
 
 export const signout = () => {
     localStorage.removeItem('token');
