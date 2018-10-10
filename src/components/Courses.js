@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import requireAuth from './requireAuth';
 
 class Courses extends Component{
     render() {
@@ -6,4 +7,4 @@ class Courses extends Component{
     }
 }
 
-export default Courses;
+export default requireAuth(Courses);
