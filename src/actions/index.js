@@ -18,7 +18,18 @@ export const fetchPrograms = () => async dispatch => {
         let webApiUrl = 'https://tutapp-rs.herokuapp.com/api/programs';
         let tokenStr = localStorage.getItem('token');
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
-        console.log(response);
+        dispatch({ type: LIST_PROGRAMS, payload: response.data });
+        
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+};
+
+export const fetchCourses = () => async dispatch => {
+    try {
+        let webApiUrl = 'https://tutapp-rs.herokuapp.com/api/courses';
+        let tokenStr = localStorage.getItem('token');
+        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
         
     } catch (e) {
