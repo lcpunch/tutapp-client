@@ -31,11 +31,9 @@ export const fetchCourses = (id) => async dispatch => {
         
         let tokenStr = localStorage.getItem('token');
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
-        console.log(response);
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
         
     } catch (e) {
-        console.log("deu pau");
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
 };

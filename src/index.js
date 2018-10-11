@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
+import { AUTH_USER, LIST_PROGRAMS } from './actions/types';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -14,11 +15,14 @@ import Signin from './components/auth/Signin';
 import Programs from './components/Programs';
 import Courses from './components/Courses';
 import Signout from './components/auth/Signout';
+import { loadingBarMiddleware } from 'react-redux-loading-bar';
 
 const store = createStore(reducers, {
     auth: { authenticated: localStorage.getItem('token') }
   },
-  applyMiddleware(reduxThunk) 
+  applyMiddleware(loadingBarMiddleware({
+    promiseTypeSuffixes: [AUTH_USER, LIST_PROGRAMS],
+  }), reduxThunk) 
 );
 
 ReactDOM.render(
