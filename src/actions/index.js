@@ -25,14 +25,17 @@ export const fetchPrograms = () => async dispatch => {
     }
 };
 
-export const fetchCourses = () => async dispatch => {
+export const fetchCourses = (id) => async dispatch => {
     try {
-        let webApiUrl = 'https://tutapp-rs.herokuapp.com/api/courses';
+        let webApiUrl = 'https://tutapp-rs.herokuapp.com/api/programs/'+id+'/courses';
+        
         let tokenStr = localStorage.getItem('token');
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        console.log(response);
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
         
     } catch (e) {
+        console.log("deu pau");
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
 };

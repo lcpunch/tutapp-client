@@ -27,8 +27,8 @@ ReactDOM.render(
       <App>
         <Route path="/" exact component={Welcome} />
         <Route path="/signin" component={Signin} />
-        <Route path="/programs" component={Programs} />
-        <Route path="/courses" component={Courses} />
+        <Route path="/programs" exact component={Programs} />
+        <Route path="/programs/:id" component={Courses} />
         <Route path="/signout" component={Signout} />
       </App>
     </BrowserRouter>

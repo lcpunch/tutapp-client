@@ -15,7 +15,7 @@ class Programs extends Component {
 
     renderProgram(program) {
         return(
-            <Link to="/courses" key={program.id}>
+            <Link to={"/programs/" + program.id} key={program.id}>
                 <div className="list-group-item list-group-item-action card card-block" key={program.id}>
                     <h4 className="card-title">{program.title}</h4>
                     <p className="card-text">{program.description}</p>
