@@ -55,6 +55,19 @@ export const fetchTutors = (id) => async dispatch => {
     }
 };
 
+export const fetchCalendars = (id) => async dispatch => {
+    try {
+        let webApiUrl = 'https://tutapp-rs.herokuapp.com/api/calendar/'+id+'/tutor';
+        let tokenStr = localStorage.getItem('token');
+        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+
+        dispatch({ type: LIST_PROGRAMS, payload: response.data });
+        
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+};
+
 export const signout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user_id');

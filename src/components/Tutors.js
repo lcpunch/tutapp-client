@@ -15,7 +15,7 @@ class Tutors extends Component {
 
     renderTutor(tutor) {
         return(
-            <Link to={"/tutor" + tutor.id} key={tutor.id}>
+            <Link to={"/tutor/" + tutor.id} key={tutor.id}>
                 <div className="list-group-item list-group-item-action card card-block mt-1" key={tutor.id}>
                     <h4 className="card-title">{tutor.name}</h4>
                     <p className="card-text">{tutor.email}</p>
