@@ -13,12 +13,11 @@ class Courses extends Component {
         this.props.fetchCourses(this.props.match.params.id);
     }
 
-    renderProgram(program) {
+    renderCourse(course) {
         return(
-            <Link to="/courses" key={program.id}>
-                <div className="list-group-item list-group-item-action card card-block" key={program.id}>
-                    <h4 className="card-title">{program.title}</h4>
-                    <p className="card-text">{program.description}</p>
+            <Link to={"/courses/"+course.id} key={course.id}>
+                <div className="list-group-item list-group-item-action card card-block" key={course.id}>
+                    <h4 className="card-title">{course.title}</h4>
                 </div>
             </Link>
         );
@@ -32,7 +31,7 @@ class Courses extends Component {
                     <p>List of courses</p>
                 </div>
                 <div className="list-group">
-                    {this.props.programs.map(this.renderProgram)}
+                    {this.props.programs.map(this.renderCourse)}
                 </div>
             </div>
         );

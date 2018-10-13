@@ -14,6 +14,7 @@ import Welcome from './components/Welcome';
 import Signin from './components/auth/Signin';
 import Programs from './components/Programs';
 import Courses from './components/Courses';
+import Tutors from './components/Tutors';
 import Signout from './components/auth/Signout';
 import { loadingBarMiddleware } from 'react-redux-loading-bar';
 
@@ -33,6 +34,7 @@ ReactDOM.render(
         <Route path="/signin" component={Signin} />
         <Route path="/programs" exact component={Programs} />
         <Route path="/programs/:id" component={Courses} />
+        <Route path="/courses/:id" component={Tutors} />
         <Route path="/signout" component={Signout} />
       </App>
     </BrowserRouter>

@@ -16,7 +16,7 @@ class Programs extends Component {
     renderProgram(program) {
         return(
             <Link to={"/programs/" + program.id} key={program.id}>
-                <div className="list-group-item list-group-item-action card card-block" key={program.id}>
+                <div className="list-group-item list-group-item-action card card-block mt-1" key={program.id}>
                     <h4 className="card-title">{program.title}</h4>
                     <p className="card-text">{program.description}</p>
                 </div>
@@ -27,10 +27,8 @@ class Programs extends Component {
     render() {
         return (
             <div className="container">
-                <div className="jumbotron border border-secondary">
-                    <h3>Programs</h3>
-                    <p>List of programs</p>
-                </div>
+                <h3 className="mt-3">Programmes</h3>
+                <p>Liste de Programmes disponibles</p>
                 <div className="list-group">
                     {this.props.programs.map(this.renderProgram)}
                 </div>
