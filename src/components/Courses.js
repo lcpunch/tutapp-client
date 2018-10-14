@@ -26,10 +26,8 @@ class Courses extends Component {
     render() {
         return (
             <div className="container">
-                <div className="jumbotron border border-secondary">
-                    <h3>Courses</h3>
-                    <p>List of courses</p>
-                </div>
+                <h3 className="mt-3">Courses</h3>
+                <p>Liste de courses disponibles</p>
                 <div className="list-group">
                     {this.props.programs.map(this.renderCourse)}
                 </div>

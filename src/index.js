@@ -4,8 +4,6 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
-import { AUTH_USER, LIST_PROGRAMS } from './actions/types';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import reducers from './reducers';
@@ -17,14 +15,12 @@ import Courses from './components/Courses';
 import Tutors from './components/Tutors';
 import Signout from './components/auth/Signout';
 import Calendars from './components/Calendars';
-import { loadingBarMiddleware } from 'react-redux-loading-bar';
+import Hours from './components/Hours';
 
 const store = createStore(reducers, {
     auth: { authenticated: localStorage.getItem('token') }
   },
-  applyMiddleware(loadingBarMiddleware({
-    promiseTypeSuffixes: [AUTH_USER, LIST_PROGRAMS],
-  }), reduxThunk) 
+  applyMiddleware(reduxThunk) 
 );
 
 ReactDOM.render(
@@ -37,6 +33,7 @@ ReactDOM.render(
         <Route path="/programs/:id" component={Courses} />
         <Route path="/courses/:id" component={Tutors} />
         <Route path="/tutor/:id" component={Calendars} />
+        <Route path="/calendar/:id/:date" component={Hours} />
         <Route path="/signout" component={Signout} />
       </App>
     </BrowserRouter>
