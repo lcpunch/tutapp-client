@@ -2,31 +2,102 @@ import React, { Component } from 'react';
 import requireAuth from './requireAuth';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import * as actions from '../actions';
 
 import './ProgramStyle.css';
 
 class Hours extends Component { 
 
+    state = {
+        open: false,
+    };
+
+    constructor(props, context){
+        super(props, context);
+        this.handleClickOpen = this.handleClickOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.renderHours = this.renderHours.bind(this);
+    }
+
     componentWillMount() {
         this.props.fetchHours(this.props.match.params.id, this.props.match.params.date);
     }
 
+    handleClickOpen() {
+        this.setState({ open: true });
+    }
+
+    handleClose() {
+        this.setState({ open: false });
+    }
+
+    saveTutorat(calendar) {
+
+        this.setState({ open: false });
+        this.props.saveTutorat(calendar);
+    }
+
     renderHours(calendar) {
         return(
-            <Link to={"/calendar/" + calendar.id} key={calendar.id}>
-                <div className="list-group-item list-group-item-action card card-block mt-1" key={calendar.id}>
-                    {calendar.hrstart +" - "+calendar.hrfinish}
+            <div className="row mt-1" key={calendar.id}>
+                <div
+                    className="col">
+                    {calendar.hrstart.slice(0, -3) +" - "+calendar.hrfinish.slice(0, -3)}
                 </div>
-            </Link>
+                <div className="col text-right">
+                    <button className="btn btn-primary" onClick={this.handleClickOpen}>Réserver</button>
+                    <Dialog
+                        open={this.state.open}
+                        onClose={this.handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description">
+                        <DialogTitle id="alert-dialog-title">{"Réservation"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                Voulez-vous confirmer la réservation?
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleClose} color="primary">
+                                Non
+                            </Button>
+                            <Button onClick={() => this.saveTutorat(calendar)} color="primary" autoFocus>
+                                Oui
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
+            </div>
+        );
+    }
+
+    
+    renderTutor = () => {
+        return(
+            <div>
+                <p>Tuteur: {this.props.calendars[0].name}</p>
+                <p>Date: <Moment format="DD/MM/YYYY">{this.props.calendars[0].dtavailability}</Moment></p>
+            </div>
         );
     }
 
     render() {
+        console.log(this.props.calendars);
+        if (this.props.calendars.length === 0) {
+            return '';
+        }
         return (
             <div className="container">
-                <h3 className="mt-3">Dates disponibles</h3>
+                <h3 className="mt-3">Horaires disponibles</h3>
+                {this.renderTutor()}
                 <div className="list-group mt-3">
                     {this.props.calendars.map(this.renderHours)}
                 </div>

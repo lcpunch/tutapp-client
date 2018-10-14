@@ -2,24 +2,28 @@ import axios from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS } from './types';
 
+// const SERVER = 'https://tutapp-rs.herokuapp.com';
+const SERVER = 'http://localhost:8000';
+
 export const signin = (formProps, callback) => async dispatch => {
     try {
         dispatch(showLoading());
-        const response = await axios.post('https://tutapp-rs.herokuapp.com/api/login', formProps);
+        const response = await axios.post(SERVER+'/api/login', formProps);
         dispatch({ type: AUTH_USER, payload: response.data.success.token });
         localStorage.setItem('token', response.data.success.token);
         localStorage.setItem('user_id', response.data.id);
-        dispatch(hideLoading());
+        
         callback();
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
+    dispatch(hideLoading());
 };
 
 export const fetchPrograms = () => async dispatch => {
     try {
         
-        let webApiUrl = 'https://tutapp-rs.herokuapp.com/api/userprograms/'+localStorage.getItem('user_id');
+        let webApiUrl = SERVER+'/api/userprograms/'+localStorage.getItem('user_id');
         let tokenStr = localStorage.getItem('token');
         
         dispatch(showLoading());
@@ -29,32 +33,31 @@ export const fetchPrograms = () => async dispatch => {
         var array = response.data.filter((obj, pos, arr) => {
             return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
         });
-
-        dispatch(hideLoading());
-
+  
         dispatch({ type: LIST_PROGRAMS, payload: array });
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
+    dispatch(hideLoading());
 };
 
 export const fetchCourses = (id) => async dispatch => {
     try {
-        let webApiUrl = 'https://tutapp-rs.herokuapp.com/api/programs/'+id+'/courses';
+        let webApiUrl = SERVER+'/api/programs/'+id+'/courses';
         let tokenStr = localStorage.getItem('token');
         dispatch(showLoading());
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
-        dispatch(hideLoading());
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
         
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
+    dispatch(hideLoading());
 };
 
 export const fetchTutors = (id) => async dispatch => {
     try {
-        let webApiUrl = 'https://tutapp-rs.herokuapp.com/api/courses/'+id+'/tutors';
+        let webApiUrl = SERVER+'/api/courses/'+id+'/tutors';
         let tokenStr = localStorage.getItem('token');
         dispatch(showLoading());
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
@@ -68,31 +71,57 @@ export const fetchTutors = (id) => async dispatch => {
 
 export const fetchCalendars = (id) => async dispatch => {
     try {
-        let webApiUrl = 'https://tutapp-rs.herokuapp.com/api/calendar/'+id+'/tutor';
+        let webApiUrl = SERVER+'/api/calendar/'+id+'/tutor';
         let tokenStr = localStorage.getItem('token');
         dispatch(showLoading());
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
-        dispatch(hideLoading());
-        dispatch({ type: LIST_PROGRAMS, payload: response.data });
+        var array = response.data.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj['dtavailability']).indexOf(obj['dtavailability']) === pos;
+        });
+        dispatch({ type: LIST_PROGRAMS, payload: array });
         
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
+    dispatch(hideLoading());
 };
 
 export const fetchHours = (id, date) => async dispatch => {
     try {
-        let webApiUrl = 'https://tutapp-rs.herokuapp.com/api/calendar/'+id+'/tutor/'+date;
+        let webApiUrl = SERVER+'/api/calendar/'+id+'/tutor/'+date;
         let tokenStr = localStorage.getItem('token');
         dispatch(showLoading());
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
-        dispatch(hideLoading());
-        console.log(response);
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
         
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
+    dispatch(hideLoading());
+};
+
+export const saveTutorat = (calendar) => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/tutorat/save';
+        let tokenStr = localStorage.getItem('token');
+        dispatch(showLoading());
+        console.log(calendar);
+        debugger;
+        await axios.post(webApiUrl, { 
+            headers: {"Authorization" : `Bearer ${tokenStr}`}, 
+            id_calendar: calendar.id,
+            tutor_id: calendar.user_id,
+            student_id: localStorage.getItem('user_id'),
+            status: 0
+        });
+        webApiUrl = SERVER+'/api/calendar/'+calendar.id+'/tutor/'+calendar.dtavailability;
+        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        dispatch({ type: LIST_PROGRAMS, payload: response.data });
+
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
 };
 
 export const signout = () => {
