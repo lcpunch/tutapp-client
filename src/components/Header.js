@@ -8,14 +8,15 @@ class Header extends Component {
     if (this.props.authenticated) {
       return (
         <div>
-          <Link to="/programs">Programs</Link>
-          <Link to="/signout">Sign Out</Link>
+          <Link className="mr-sm-4" to="/programs">Programmes</Link>
+          <Link className="mr-sm-4" to="/tutorats">Mes tutorats</Link>
+          <Link className="mr-sm-2" to="/signout">Sign Out</Link>
         </div>
       );
     } else {
       return(
         <div>
-          <Link to="/signin">Sign In</Link>
+          <Link className="nav-item" to="/signin">Sign In</Link>
         </div>
       );
     }
@@ -27,7 +28,7 @@ class Header extends Component {
         <nav className="navbar navbar-light bg-light">
           <Link to="/">
             <span className="navbar-brand">
-              <img src="https://brew.sh/assets/img/homebrew-256x256.png" width="30" height="30" className="d-inline-block align-top" alt=""/>
+              <img src="https://www.svgrepo.com/show/6289/book-with-apple.svg" width="30" height="30" className="d-inline-block align-top" alt=""/>
               Tutapp
             </span>
           </Link>

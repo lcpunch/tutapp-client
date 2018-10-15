@@ -16,6 +16,7 @@ import Tutors from './components/Tutors';
 import Signout from './components/auth/Signout';
 import Calendars from './components/Calendars';
 import Hours from './components/Hours';
+import Tutorats from './components/Tutorats';
 
 const store = createStore(reducers, {
     auth: { authenticated: localStorage.getItem('token') }
@@ -30,6 +31,7 @@ ReactDOM.render(
         <Route path="/" exact component={Welcome} />
         <Route path="/signin" component={Signin} />
         <Route path="/programs" exact component={Programs} />
+        <Route path="/tutorats" exact component={Tutorats} />
         <Route path="/programs/:id" component={Courses} />
         <Route path="/courses/:id" component={Tutors} />
         <Route path="/tutor/:id" component={Calendars} />

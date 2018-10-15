@@ -122,6 +122,22 @@ export const saveTutorat = (calendar) => async dispatch => {
     dispatch(hideLoading());
 };
 
+export const fetchTutorats = () => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/tutorat/student/'+localStorage.getItem('user_id');
+        let tokenStr = localStorage.getItem('token');
+        dispatch(showLoading());
+
+        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+
+        dispatch({ type: LIST_PROGRAMS, payload: response.data });
+        
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
 export const signout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user_id');
