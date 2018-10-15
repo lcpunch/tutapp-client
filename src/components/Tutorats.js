@@ -52,7 +52,7 @@ class Tutorats extends Component {
             <div className="list-group-item list-group-item-action card card-block mt-1" key={tutorat.id}>
                 <h4 className="card-title">{tutorat.name}</h4>
                 <p className="card-text">Date:<Moment format="DD/MM/YYYY">{tutorat.dtavailability}</Moment></p>
-                <p className="card-text">Horaire:{tutorat.hrstart.slice(0, -3) + ' - ' + tutorat.hrfinish.slice(0, -3)}</p>
+                <p className="card-text">Horaire:{tutorat.hrstart + ' - ' + tutorat.hrfinish}</p>
                 <button className="btn btn-primary" onClick={() => this.handleClickOpen(tutorat)}>Confirmer</button>
                     <Dialog
                         open={this.state.open}
