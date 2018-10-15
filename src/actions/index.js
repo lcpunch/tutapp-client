@@ -2,8 +2,8 @@ import axios from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS } from './types';
 
-// const SERVER = 'https://tutapp-rs.herokuapp.com';
-const SERVER = 'http://localhost:8000';
+const SERVER = 'https://tutapp-rs.herokuapp.com';
+// const SERVER = 'http://localhost:8000';
 
 export const signin = (formProps, callback) => async dispatch => {
     try {
@@ -105,8 +105,6 @@ export const saveTutorat = (calendar) => async dispatch => {
         let webApiUrl = SERVER+'/api/tutorat/save';
         let tokenStr = localStorage.getItem('token');
         dispatch(showLoading());
-        console.log(calendar);
-        debugger;
         await axios.post(webApiUrl, { 
             headers: {"Authorization" : `Bearer ${tokenStr}`}, 
             id_calendar: calendar.id,
@@ -114,7 +112,7 @@ export const saveTutorat = (calendar) => async dispatch => {
             student_id: localStorage.getItem('user_id'),
             status: 0
         });
-        webApiUrl = SERVER+'/api/calendar/'+calendar.id+'/tutor/'+calendar.dtavailability;
+        webApiUrl = SERVER+'/api/calendar/'+calendar.user_id+'/tutor/'+calendar.dtavailability;
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
 

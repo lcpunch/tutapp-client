@@ -18,6 +18,7 @@ class Hours extends Component {
 
     state = {
         open: false,
+        calendar: {}
     };
 
     constructor(props, context){
@@ -31,18 +32,17 @@ class Hours extends Component {
         this.props.fetchHours(this.props.match.params.id, this.props.match.params.date);
     }
 
-    handleClickOpen() {
-        this.setState({ open: true });
+    handleClickOpen(calendar) {
+        this.setState({ open: true, calendar });
     }
 
     handleClose() {
         this.setState({ open: false });
     }
 
-    saveTutorat(calendar) {
-
+    saveTutorat() {
         this.setState({ open: false });
-        this.props.saveTutorat(calendar);
+        this.props.saveTutorat(this.state.calendar);
     }
 
     renderHours(calendar) {
@@ -53,7 +53,7 @@ class Hours extends Component {
                     {calendar.hrstart.slice(0, -3) +" - "+calendar.hrfinish.slice(0, -3)}
                 </div>
                 <div className="col text-right">
-                    <button className="btn btn-primary" onClick={this.handleClickOpen}>Réserver</button>
+                    <button className="btn btn-primary" onClick={() => this.handleClickOpen(calendar)}>Réserver</button>
                     <Dialog
                         open={this.state.open}
                         onClose={this.handleClose}
@@ -90,9 +90,8 @@ class Hours extends Component {
     }
 
     render() {
-        console.log(this.props.calendars);
         if (this.props.calendars.length === 0) {
-            return '';
+            return <div>Il n'a plus de heures disponibles</div>;
         }
         return (
             <div className="container">
