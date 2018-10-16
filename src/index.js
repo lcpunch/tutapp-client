@@ -13,13 +13,14 @@ import reducers from './reducers';
 import App from './components/App';
 import Welcome from './components/Welcome';
 import Signin from './components/auth/Signin';
-import Programs from './components/Programs';
-import Courses from './components/Courses';
-import Tutors from './components/Tutors';
+import Programs from './components/student/Programs';
+import Courses from './components/student/Courses';
+import Tutors from './components/student/Tutors';
 import Signout from './components/auth/Signout';
-import Calendars from './components/Calendars';
-import Hours from './components/Hours';
-import Tutorats from './components/Tutorats';
+import Calendars from './components/student/Calendars';
+import Hours from './components/student/Hours';
+import Tutorats from './components/student/Tutorats';
+import CalendarsConfig from './components/tutor/CalendarsConfig';
 
 const store = createStore(reducers, {
     auth: { authenticated: localStorage.getItem('token') }
@@ -35,6 +36,7 @@ ReactDOM.render(
         <Route path="/signin" component={Signin} />
         <Route path="/programs" exact component={Programs} />
         <Route path="/tutorats" exact component={Tutorats} />
+        <Route path="/calendars" exact component={CalendarsConfig} />
         <Route path="/programs/:id" component={Courses} />
         <Route path="/courses/:id" component={Tutors} />
         <Route path="/tutor/:id" component={Calendars} />

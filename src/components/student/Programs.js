@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import requireAuth from './requireAuth';
+import requireAuth from '../requireAuth';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import * as actions from '../actions';
+import * as actions from '../../actions';
 
 import './ProgramStyle.css';
 

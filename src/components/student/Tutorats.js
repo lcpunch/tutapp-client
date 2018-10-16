@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import requireAuth from './requireAuth';
+import requireAuth from '../requireAuth';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
@@ -9,12 +9,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-import * as actions from '../actions';
+import * as actions from '../../actions';
 
 import './ProgramStyle.css';
 
-class Hours extends Component { 
+//TODO: precisamos mostrar o curso.
+
+class Tutorats extends Component { 
 
     state = {
         open: false,
@@ -25,11 +26,11 @@ class Hours extends Component {
         super(props, context);
         this.handleClickOpen = this.handleClickOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
-        this.renderHours = this.renderHours.bind(this);
+        this.renderTutorats = this.renderTutorats.bind(this);
     }
 
-    componentWillMount() {
-        this.props.fetchHours(this.props.match.params.id, this.props.match.params.date);
+    componentDidMount() {
+         this.props.fetchTutorats();
     }
 
     handleClickOpen(calendar) {
@@ -42,18 +43,17 @@ class Hours extends Component {
 
     saveTutorat() {
         this.setState({ open: false });
+        //TODO: mudar o status
         this.props.confirmTutorat(this.state.calendar);
     }
 
-    renderHours(calendar) {
+    renderTutorats(tutorat) {
         return(
-            <div className="row mt-1" key={calendar.id}>
-                <div
-                    className="col">
-                    {calendar.hrstart.slice(0, -3) +" - "+calendar.hrfinish.slice(0, -3)}
-                </div>
-                <div className="col text-right">
-                    <button className="btn btn-primary" onClick={() => this.handleClickOpen(calendar)}>Réserver</button>
+            <div className="list-group-item list-group-item-action card card-block mt-1" key={tutorat.id}>
+                <h4 className="card-title">{tutorat.name}</h4>
+                <p className="card-text">Date:<Moment format="DD/MM/YYYY">{tutorat.dtavailability}</Moment></p>
+                <p className="card-text">Horaire:{tutorat.hrstart + ' - ' + tutorat.hrfinish}</p>
+                <button className="btn btn-primary" onClick={() => this.handleClickOpen(tutorat)}>Confirmer</button>
                     <Dialog
                         open={this.state.open}
                         onClose={this.handleClose}
@@ -62,43 +62,32 @@ class Hours extends Component {
                         <DialogTitle id="alert-dialog-title">{"Réservation"}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Voulez-vous confirmer la réservation?
+                                Voulez-vous confirmer le tutorat?
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={this.handleClose} color="primary">
                                 Non
                             </Button>
-                            <Button onClick={() => this.saveTutorat(calendar)} color="primary" autoFocus>
+                            <Button onClick={() => this.saveTutorat(tutorat)} color="primary" autoFocus>
                                 Oui
                             </Button>
                         </DialogActions>
                     </Dialog>
-                </div>
-            </div>
-        );
-    }
-
-    
-    renderTutor = () => {
-        return(
-            <div>
-                <p>Tuteur: {this.props.calendars[0].name}</p>
-                <p>Date: <Moment format="DD/MM/YYYY">{this.props.calendars[0].dtavailability}</Moment></p>
             </div>
         );
     }
 
     render() {
-        if (this.props.calendars.length === 0) {
-            return <div>Il n'a plus de heures disponibles</div>;
+        if (this.props.tutorats.length === 0) {
+            return <div>Il n'a plus de tutorats</div>;
         }
         return (
             <div className="container">
-                <h3 className="mt-3">Horaires disponibles</h3>
-                {this.renderTutor()}
-                <div className="list-group mt-3">
-                    {this.props.calendars.map(this.renderHours)}
+                <h3 className="mt-3">Mes tutorats</h3>
+                <p>Liste de tutorats à confirmer</p>
+                <div className="list-group">
+                    {this.props.tutorats.map(this.renderTutorats)}
                 </div>
             </div>
         );
@@ -106,12 +95,12 @@ class Hours extends Component {
 }
 
 function mapStateToProps(state) {
-    return { calendars: state.program.data };
+    return { tutorats: state.program.data };
 }
 
 export default compose(
     connect(mapStateToProps, actions),
     requireAuth
-)(Hours);
+)(Tutorats);
   
   
