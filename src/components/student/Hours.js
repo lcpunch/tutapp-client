@@ -42,7 +42,7 @@ class Hours extends Component {
 
     saveTutorat() {
         this.setState({ open: false });
-        this.props.confirmTutorat(this.state.calendar);
+        this.props.saveTutorat(this.state.calendar);
     }
 
     renderHours(calendar) {
@@ -50,7 +50,7 @@ class Hours extends Component {
             <div className="row mt-1" key={calendar.id}>
                 <div
                     className="col">
-                    {calendar.hrstart.slice(0, -3) +" - "+calendar.hrfinish.slice(0, -3)}
+                    {calendar.hrstart +" - "+calendar.hrfinish}
                 </div>
                 <div className="col text-right">
                     <button className="btn btn-primary" onClick={() => this.handleClickOpen(calendar)}>Réserver</button>
