@@ -3,7 +3,6 @@ import BigCalendar from 'react-big-calendar'
 
 const propTypes = {}
 
-
 const events = [
     {
       id: 0,
