@@ -2,8 +2,8 @@ import axios from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS } from './types';
 
-// const SERVER = 'https://tutapp-rs.herokuapp.com';
-const SERVER = 'http://localhost:8000';
+const SERVER = 'https://tutapp-rs.herokuapp.com';
+// const SERVER = 'http://localhost:8000';
 
 export const signin = (formProps, callback) => async dispatch => {
     try {
