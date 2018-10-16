@@ -18,7 +18,7 @@ class Header extends Component {
     } else {
       return(
         <ul className="navbar-nav">
-          <li className="nav-item"><Link className="nav-item" to="/signin">Sign In</Link></li>
+          <li className="nav-item"><Link className="nav-link" to="/signin">Sign In</Link></li>
         </ul>
       );
     }
