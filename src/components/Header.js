@@ -7,17 +7,18 @@ class Header extends Component {
   renderLinks() {
     if (this.props.authenticated) {
       return (
-        <div>
-          <Link className="mr-sm-4" to="/programs">Programmes</Link>
-          <Link className="mr-sm-4" to="/tutorats">Mes tutorats</Link>
-          <Link className="mr-sm-2" to="/signout">Sign Out</Link>
-        </div>
+        <ul className="navbar-nav">
+          <li className="nav-item"><Link className="nav-link" to="/programs">Programmes</Link></li>
+          <li className="nav-item"><Link className="nav-link" to="/tutorats">Mes tutorats</Link></li>
+          <li className="nav-item"><Link className="nav-link" to="/signout">Sign Out</Link></li>
+        </ul>
+
       );
     } else {
       return(
-        <div>
-          <Link className="nav-item" to="/signin">Sign In</Link>
-        </div>
+        <ul className="navbar-nav">
+          <li className="nav-item"><Link className="nav-item" to="/signin">Sign In</Link></li>
+        </ul>
       );
     }
   }
@@ -25,7 +26,7 @@ class Header extends Component {
   render() {
     return(
       <div>
-        <nav className="navbar navbar-light bg-light">
+        {/* <nav className="navbar navbar-light bg-light">
           <Link to="/">
             <span className="navbar-brand">
               <img src="https://www.svgrepo.com/show/6289/book-with-apple.svg" width="30" height="30" className="d-inline-block align-top" alt=""/>
@@ -33,6 +34,18 @@ class Header extends Component {
             </span>
           </Link>
           {this.renderLinks()}
+        </nav> */}
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <Link className="navbar-brand" to="/">
+            <img src="https://www.svgrepo.com/show/6289/book-with-apple.svg" width="30" height="30" className="d-inline-block align-top" alt=""/>
+            Tutapp
+          </Link>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+          {this.renderLinks()}
+          </div>
         </nav>
       </div>
     );
