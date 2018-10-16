@@ -19,14 +19,18 @@ class Tutorats extends Component {
 
     state = {
         open: false,
+        openDelete: false,
         calendar: {}
     };
 
-    constructor(props, context){
+    constructor(props, context) {
         super(props, context);
         this.handleClickOpen = this.handleClickOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleClickOpenDelete = this.handleClickOpenDelete.bind(this);
+        this.handleCloseDelete = this.handleCloseDelete.bind(this);
         this.renderTutorats = this.renderTutorats.bind(this);
+        this.renderConfirmButton = this.renderConfirmButton.bind(this);
     }
 
     componentDidMount() {
@@ -37,14 +41,42 @@ class Tutorats extends Component {
         this.setState({ open: true, calendar });
     }
 
+    handleClickOpenDelete(calendar) {
+        this.setState({ openDelete: true, calendar });
+    }
+
     handleClose() {
         this.setState({ open: false });
     }
 
+    handleCloseDelete() {
+        this.setState({ openDelete: false });
+    }
+
     saveTutorat() {
         this.setState({ open: false });
-        //TODO: mudar o status
         this.props.confirmTutorat(this.state.calendar);
+    }
+
+    deleteTutorat() {
+        this.setState({ openDelete: false });
+        this.props.deleteTutorat(this.state.calendar);
+    }
+
+    renderConfirmButton(tutorat) {
+        if(tutorat.status === 0) {
+            return (
+                <div className="px-3 row justify-content-between">
+                    <button className="col-3 btn btn-primary" onClick={() => this.handleClickOpen(tutorat)}>Confirmer</button>
+                    <button className="col-3 btn btn-danger" onClick={() => this.handleClickOpenDelete(tutorat)}>Annuler</button>
+                </div>
+            );
+        } 
+        return (
+            <div className="px-3 row justify-content-between">
+                <button disabled className="col-3 btn btn-secondary" onClick={() => this.handleClickOpen(tutorat)}>Confirmé</button>
+            </div>
+        );
     }
 
     renderTutorats(tutorat) {
@@ -53,7 +85,7 @@ class Tutorats extends Component {
                 <h4 className="card-title">{tutorat.name}</h4>
                 <p className="card-text">Date:<Moment format="DD/MM/YYYY">{tutorat.dtavailability}</Moment></p>
                 <p className="card-text">Horaire:{tutorat.hrstart + ' - ' + tutorat.hrfinish}</p>
-                <button className="btn btn-primary" onClick={() => this.handleClickOpen(tutorat)}>Confirmer</button>
+                {this.renderConfirmButton(tutorat)}
                     <Dialog
                         open={this.state.open}
                         onClose={this.handleClose}
@@ -69,7 +101,27 @@ class Tutorats extends Component {
                             <Button onClick={this.handleClose} color="primary">
                                 Non
                             </Button>
-                            <Button onClick={() => this.saveTutorat(tutorat)} color="primary" autoFocus>
+                            <Button onClick={() => this.saveTutorat()} color="primary" autoFocus>
+                                Oui
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Dialog
+                        open={this.state.openDelete}
+                        onClose={this.handleCloseDelete}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description">
+                        <DialogTitle id="alert-dialog-title">{"Réservation"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                Voulez-vous annuler le tutorat?
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleCloseDelete} color="primary">
+                                Non
+                            </Button>
+                            <Button onClick={() => this.deleteTutorat()} color="primary" autoFocus>
                                 Oui
                             </Button>
                         </DialogActions>

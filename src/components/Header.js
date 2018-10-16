@@ -27,15 +27,6 @@ class Header extends Component {
   render() {
     return(
       <div>
-        {/* <nav className="navbar navbar-light bg-light">
-          <Link to="/">
-            <span className="navbar-brand">
-              <img src="https://www.svgrepo.com/show/6289/book-with-apple.svg" width="30" height="30" className="d-inline-block align-top" alt=""/>
-              Tutapp
-            </span>
-          </Link>
-          {this.renderLinks()}
-        </nav> */}
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <Link className="navbar-brand" to="/">
             <img src="https://www.svgrepo.com/show/6289/book-with-apple.svg" width="30" height="30" className="d-inline-block align-top" alt=""/>

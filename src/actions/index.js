@@ -2,8 +2,8 @@ import axios from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS } from './types';
 
-const SERVER = 'https://tutapp-rs.herokuapp.com';
-// const SERVER = 'http://localhost:8000';
+// const SERVER = 'https://tutapp-rs.herokuapp.com';
+const SERVER = 'http://localhost:8000';
 
 export const signin = (formProps, callback) => async dispatch => {
     try {
@@ -128,6 +128,24 @@ export const confirmTutorat = (calendar) => async dispatch => {
         let tokenStr = localStorage.getItem('token');
         dispatch(showLoading());
         await axios.post(webApiUrl, { 
+            headers: {"Authorization" : `Bearer ${tokenStr}`}
+        });
+        webApiUrl = SERVER+'/api/tutorat/student/'+localStorage.getItem('user_id');
+        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        dispatch({ type: LIST_PROGRAMS, payload: response.data });
+
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
+export const deleteTutorat = (tutorat) => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/tutorat/'+tutorat.id;
+        let tokenStr = localStorage.getItem('token');
+        dispatch(showLoading());
+        await axios.delete(webApiUrl, { 
             headers: {"Authorization" : `Bearer ${tokenStr}`}
         });
         webApiUrl = SERVER+'/api/tutorat/student/'+localStorage.getItem('user_id');
