@@ -54,14 +54,20 @@ class Selectable extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchCalendars(localStorage.getItem('user_id'));
+    if(this.props.id) {
+      this.props.fetchCalendars(this.props.id);
+    } else {
+      this.props.fetchCalendars(localStorage.getItem('user_id'));
+    }
   }
 
   handleSelect = ({ start, end }) => {
-    this.setState({
-      selectedDate: moment(start).format("MM/DD/YYYY"),
-      modal: true
-    });
+    if(!this.props.id) {
+      this.setState({
+        selectedDate: moment(start).format("MM/DD/YYYY"),
+        modal: true
+      });
+    }
   }
 
   toggle() {
