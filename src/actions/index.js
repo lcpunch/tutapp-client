@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS } from './types';
+import moment from 'moment';
 
 const SERVER = 'https://tutapp-rs.herokuapp.com';
 // const SERVER = 'http://localhost:8000';
@@ -139,6 +140,33 @@ export const confirmTutorat = (calendar) => async dispatch => {
     }
     dispatch(hideLoading());
 };
+
+export const saveCalendar = (event) => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/calendar/save';
+        let tokenStr = localStorage.getItem('token');
+        dispatch(showLoading());
+
+        await axios.post(webApiUrl, { 
+            headers: {"Authorization" : `Bearer ${tokenStr}`}, 
+            dtavailability: moment(event.start).format("YYYY-MM-DD"),
+            hrstart: moment(event.start).format("HH:mm"),
+            hrfinish: moment(event.end).format("HH:mm"),
+            user_id: localStorage.getItem('user_id')
+        });
+        
+        webApiUrl = SERVER+'/api/calendar/'+localStorage.getItem('user_id')+'/tutor';
+        
+        const responseCalendars = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        
+        dispatch({ type: LIST_PROGRAMS, payload: responseCalendars.data });
+        
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
 
 export const deleteTutorat = (tutorat) => async dispatch => {
     try {
