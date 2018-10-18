@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import BigCalendar from 'react-big-calendar'
-import Selectable from '../tutor/Selectable';
+import Selectable from './Selectable';
 import * as actions from '../../actions';
 
 const localizer = BigCalendar.momentLocalizer(moment) 

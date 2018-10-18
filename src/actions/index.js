@@ -3,8 +3,8 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS } from './types';
 import moment from 'moment';
 
-const SERVER = 'https://tutapp-rs.herokuapp.com';
-// const SERVER = 'http://localhost:8000';
+// const SERVER = 'https://tutapp-rs.herokuapp.com';
+const SERVER = 'http://localhost:8000';
 
 export const signin = (formProps, callback) => async dispatch => {
     try {
@@ -75,6 +75,7 @@ export const fetchCalendars = (id) => async dispatch => {
         let webApiUrl = SERVER+'/api/calendar/'+id+'/tutor';
         let tokenStr = localStorage.getItem('token');
         dispatch(showLoading());
+        console.log(webApiUrl);
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
         var array = response.data.filter((obj, pos, arr) => {
             return arr.map(mapObj => mapObj['dtavailability']).indexOf(obj['dtavailability']) === pos;
@@ -106,6 +107,14 @@ export const saveTutorat = (calendar) => async dispatch => {
         let webApiUrl = SERVER+'/api/tutorat/save';
         let tokenStr = localStorage.getItem('token');
         dispatch(showLoading());
+        console.log('inside saveCalendar');
+        console.log({ 
+            headers: {"Authorization" : `Bearer ${tokenStr}`}, 
+            id_calendar: calendar.id,
+            tutor_id: calendar.user_id,
+            student_id: localStorage.getItem('user_id'),
+            status: 0
+        });
         await axios.post(webApiUrl, { 
             headers: {"Authorization" : `Bearer ${tokenStr}`}, 
             id_calendar: calendar.id,
@@ -159,6 +168,27 @@ export const saveCalendar = (event) => async dispatch => {
         
         const responseCalendars = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
         
+        dispatch({ type: LIST_PROGRAMS, payload: responseCalendars.data });
+        
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
+
+export const deleteCalendar = (event) => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/calendar/'+event.id;
+        let tokenStr = localStorage.getItem('token');
+        dispatch(showLoading());
+
+        console.log(webApiUrl);
+
+        await axios.delete(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`}});
+        
+        webApiUrl = SERVER+'/api/calendar/'+localStorage.getItem('user_id')+'/tutor';
+        const responseCalendars = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
         dispatch({ type: LIST_PROGRAMS, payload: responseCalendars.data });
         
     } catch (e) {

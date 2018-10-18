@@ -1,6 +1,6 @@
 import React from 'react'
 import BigCalendar from 'react-big-calendar'
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
@@ -43,39 +43,24 @@ class Selectable extends React.Component {
     super(...args)
 
     this.state = {
-      selectedDate: "",
+      selectedCalendar: "",
       events,
-      modal: false,
-      modalSelect: false
+      modal: false
     }
 
     this.toggle = this.toggle.bind(this);
-    this.toggleSelect = this.toggleSelect.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.deleteEvent = this.deleteEvent.bind(this);
   }
 
   componentDidMount() {
-    if(this.props.id) {
-      this.props.fetchCalendars(this.props.id);
-    } else {
-      this.props.fetchCalendars(localStorage.getItem('user_id'));
-    }
+    
+    this.props.fetchCalendars(this.props.id);
   }
 
-  handleSelect = ({ start, end }) => {
-    if(!this.props.id) {
-      this.setState({
-        selectedDate: moment(start).format("MM/DD/YYYY"),
-        modal: true
-      });
-    }
-  }
-
-  handleSelectEvent = (event) => {
+  handleSelect = (event) => {
     this.setState({
-      selectedDate: event,
-      modalSelect: true
+      selectedCalendar: event,
+      modal: true
     });
   }
 
@@ -85,29 +70,9 @@ class Selectable extends React.Component {
     });
   }
 
-  toggleSelect() {
-    this.setState({
-      modalSelect: !this.state.modalSelect
-    });
-  }
-
-  onSubmitDelete = () => {
-    
-    this.setState({ modalSelect: false });
-    this.props.deleteCalendar(this.state.selectedDate);
-  };
-
   onSubmit = () => {
-    const time = document.getElementById('time').value;
-    const event = {
-      start: new Date(moment(this.state.selectedDate).add(parseInt(time.substring(0, 2)), 'hours').format('YYYY-MM-DD HH:mm')),
-      end: new Date(moment(this.state.selectedDate).add(parseInt(time.substring(0, 2))+1, 'hours').format('YYYY-MM-DD HH:mm')),
-      title: 'tutorat'
-    }
-
-    this.setState({ modal: false });
-    
-    this.props.saveCalendar(event);
+      this.setState({ modal: false });
+      this.props.saveTutorat(this.state.selectedCalendar);
   };
 
   renderHour() {
@@ -120,10 +85,6 @@ class Selectable extends React.Component {
               disabledHours={disabledHours}
               disabledMinutes={disabledMinutes}
             />;
-  }
-
-  deleteEvent() {
-    alert('deleta essa merda, seu pau no cu');
   }
 
   render() {
@@ -140,38 +101,17 @@ class Selectable extends React.Component {
           events={this.props.events}
           defaultView={BigCalendar.Views.MONTH}
           defaultDate={new Date()}
-          onSelectEvent={event => this.handleSelectEvent(event)}
-          onSelectSlot={this.handleSelect}
+          onSelectEvent={event => this.handleSelect(event)}
+          
         />
         <Modal backdrop="static" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Choisissez une heure de début</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Voulez-vous réserver le tutorat?</ModalHeader>
             <ModalBody>
               <form onSubmit={handleSubmit(this.onSubmit)}>
-                <div className="form-group">
-                  <Field
-                    name="hrfinish"
-                    className="form-control"
-                    component={this.renderHour}
-                    autoComplete="none"
-                    />
-                </div>
-                <button className="btn btn-primary">
-                  Sauvegarder
-                </button>
-              </form>
-            </ModalBody>
-        </Modal>
-        <Modal backdrop="static" isOpen={this.state.modalSelect} toggle={this.toggleSelect} className={this.props.className}>
-          <ModalHeader toggle={this.toggleSelect}>Voulez-vous supprimer le tutorat?</ModalHeader>
-            <ModalBody>
-              <form onSubmit={handleSubmit(this.onSubmitDelete)}>
-                <div className="form-group">
-                  
-                </div>
-                <button className="btn btn-primary mr-3">
+                <button className="btn btn-primary mr-2">
                   Oui
                 </button>
-                <button type="button" onClick={()=>this.setState({ modalSelect: false })} className="btn btn-secondary">
+                <button type="button" onClick={()=>this.setState({ modal: false })} className="btn btn-danger">
                   Non
                 </button>
               </form>
@@ -184,23 +124,23 @@ class Selectable extends React.Component {
 
 Selectable.propTypes = propTypes
 
+
 function mapStateToProps(state) {
 
   let eventObject;
   const localevents=[];
 
   for(let event in state.program.data) {
-    
     eventObject = {};
-
     let dtstart = new Date(moment(state.program.data[event].dtavailability).format("MM/DD/YYYY"));
     let dtend = new Date(dtstart);
-    let title = state.program.data[event].hrstart.slice(0, 2) + " - " + state.program.data[event].hrfinish.slice(0, 2);
+    let title = "Tutorat à donner";
     let id = state.program.data[event].id;
     eventObject["start"] = dtstart;
     eventObject["end"] = dtend;
     eventObject["title"] = title;
     eventObject["id"] = id;
+    eventObject["user_id"] = state.program.data[event].user_id;
     localevents.push(eventObject);
   }
 
