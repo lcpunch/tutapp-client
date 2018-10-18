@@ -29,6 +29,8 @@ class CreatePrograms extends Component {
             <div className="container">
                 <h3 className="mt-3">Programmes</h3>
                 <p>Liste de Programmes disponibles</p>
+                <Link className="btn btn-primary" to="/createProgram">Créer un programme</Link>
+                <br /><br />
                 <div className="list-group">
                     {this.props.programs.map(this.renderProgram)}
                 </div>
@@ -38,7 +40,7 @@ class CreatePrograms extends Component {
 }
 
 function mapStateToProps(state) {
-    
+
     return { programs: state.program.data };
 }
 

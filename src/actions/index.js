@@ -58,7 +58,7 @@ export const fetchProgram = (id) => async dispatch => {
     dispatch(hideLoading());
 };
 
-export const editProgram = (data) => async dispatch => {
+export const editProgram = (data, callback) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/programs/update/'+data.id;
         let tokenStr = localStorage.getItem('token');
@@ -66,6 +66,24 @@ export const editProgram = (data) => async dispatch => {
         //dispatch(showLoading());
         const response = await axios.post(webApiUrl, data);
 
+        callback();
+        //dispatch({ type: LIST_PROGRAMS, payload: response.data });
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
+export const createProgram = (data, callback) => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/programs/save';
+        let tokenStr = localStorage.getItem('token');
+
+        //dispatch(showLoading());
+        const response = await axios.post(webApiUrl, data);
+
+        console.log(response);
+        callback();
         //dispatch({ type: LIST_PROGRAMS, payload: response.data });
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });

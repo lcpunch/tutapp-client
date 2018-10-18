@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import requireAuth from '../requireAuth';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { isEqual } from 'lodash';
 import * as actions from '../../actions';
 
 import './ProgramStyle.css';
 
-class EditProgram extends Component {
+class CreateProgram extends Component {
 
     constructor(props) {
         super(props);
@@ -17,30 +16,16 @@ class EditProgram extends Component {
         }
     }
 
-    componentWillMount() {
-        this.props.fetchProgram(this.props.match.params.id);
-    }
-
-    componentWillReceiveProps(nextProps) {
-      if (!isEqual(nextProps.program, this.state.program)) {
-        this.setState({...this.state,
-          title: nextProps.program.title,
-          description: nextProps.program.description
-        });
-      }
-    }
-
     handleSubmit = (e) => {
       e.preventDefault();
       const title = this.getTitle.value;
       const description =  this.getDescription.value;
       const data = {
-        id: this.props.match.params.id,
         title,
         description
       }
 
-      this.props.editProgram(data, () => {
+      this.props.createProgram(data, () => {
         this.props.history.push('/CreatePrograms');
       })
     }
@@ -61,9 +46,9 @@ class EditProgram extends Component {
         return (
           <div className="container">
             <form onSubmit={this.handleSubmit}>
-                 <h3>Edit Program:</h3>
+                 <h3>Créer un programme</h3>
                  <div className="form-group">
-                    <label>Title</label>
+                    <label>Titre</label>
                     <input required type="text"
                       className="form-control"
                       onChange={this.handleChange}
@@ -92,4 +77,4 @@ function mapStateToProps(state) {
 export default compose(
     connect(mapStateToProps, actions),
     requireAuth
-)(EditProgram);
+)(CreateProgram);
