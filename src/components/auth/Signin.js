@@ -59,4 +59,3 @@ export default compose(
   connect(mapStateToProps, actions),
   reduxForm({ form:'signin' })
 )(Signin);
-
