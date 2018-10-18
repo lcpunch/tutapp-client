@@ -3,8 +3,8 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS } from './types';
 import moment from 'moment';
 
-// const SERVER = 'https://tutapp-rs.herokuapp.com';
-const SERVER = 'http://localhost:8000';
+const SERVER = 'https://tutapp-rs.herokuapp.com';
+// const SERVER = 'http://localhost:8000';
 
 export const signin = (formProps, callback) => async dispatch => {
     try {
@@ -75,12 +75,9 @@ export const fetchCalendars = (id) => async dispatch => {
         let webApiUrl = SERVER+'/api/calendar/'+id+'/tutor';
         let tokenStr = localStorage.getItem('token');
         dispatch(showLoading());
-        console.log(webApiUrl);
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
-        var array = response.data.filter((obj, pos, arr) => {
-            return arr.map(mapObj => mapObj['dtavailability']).indexOf(obj['dtavailability']) === pos;
-        });
-        dispatch({ type: LIST_PROGRAMS, payload: array });
+        
+        dispatch({ type: LIST_PROGRAMS, payload: response.data });
         
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });

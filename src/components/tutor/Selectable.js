@@ -52,7 +52,6 @@ class Selectable extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.toggleSelect = this.toggleSelect.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.deleteEvent = this.deleteEvent.bind(this);
   }
 
   componentDidMount() {
@@ -122,9 +121,6 @@ class Selectable extends React.Component {
             />;
   }
 
-  deleteEvent() {
-    alert('deleta essa merda, seu pau no cu');
-  }
 
   render() {
     const { localizer } = this.props
