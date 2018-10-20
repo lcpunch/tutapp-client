@@ -4,12 +4,14 @@ import auth from './auth';
 import program from './program';
 import course from './course';
 import calendar from './calendar';
+import user from './user';
 import { loadingBarReducer } from 'react-redux-loading-bar'
 
 export default combineReducers({
   auth,
   program,
   course,
+  user,
   calendar,
   loadingBar: loadingBarReducer,
   form: formReducer
