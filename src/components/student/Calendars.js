@@ -1,12 +1,15 @@
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import React, { Component } from 'react';
 import requireAuth from '../requireAuth';
+import TimePicker from 'react-times';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
+import moment from 'moment';
+import BigCalendar from 'react-big-calendar'
+import Selectable from './Selectable';
 import * as actions from '../../actions';
 
-import './ProgramStyle.css';
+const localizer = BigCalendar.momentLocalizer(moment) 
 
 class Calendars extends Component { 
 
@@ -14,25 +17,34 @@ class Calendars extends Component {
         this.props.fetchCalendars(this.props.match.params.id);
     }
 
-    renderCalendar(calendar) {
-        return(
-            <Link to={"/calendar/" + calendar.user_id + "/" + calendar.dtavailability} key={calendar.id}>
-                <div className="list-group-item list-group-item-action card card-block mt-1" key={calendar.id}>
-                    <Moment format="DD/MM/YYYY">
-                        {calendar.dtavailability}
-                    </Moment>
-                </div>
-            </Link>
-        );
+    constructor(props, context){
+        super(props, context);
+        this.renderTimePicker = this.renderTimePicker.bind(this);
+    }
+
+    renderTimePicker() {
+        return <TimePicker
+            theme="classic"
+            timeMode="24"
+            timeConfig={{
+                from: '08:00',
+                to: '23:00',
+                step: 1,
+                unit: 'hour'
+            }}
+            onTimeChange={this.onTimeChange.bind(this)}
+        />;
     }
 
     render() {
         return (
-            <div className="container">
+            <div className="container-fluid h-100">
                 <h3 className="mt-3">Dates disponibles</h3>
-                <div className="list-group mt-3">
-                    {this.props.calendars.map(this.renderCalendar)}
-                </div>
+                <div className="mt-3"></div>
+                <Selectable
+                    localizer={localizer}
+                    id={this.props.match.params.id}
+                />
             </div>
         );
     }

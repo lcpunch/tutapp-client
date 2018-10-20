@@ -3,35 +3,81 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Header extends Component {
+  
+  renderTutor() {
+    if(localStorage.getItem('user_role') === "2") {
+      return (
+        <li className="nav-item dropdown">
+          <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Tuteurs
+          </div>
+          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <Link className="dropdown-item" to="/calendars">Mes horaires</Link>
+          </div>
+        </li>
+      );
+    }
+  }
+
+  renderStudent() {
+    if(localStorage.getItem('user_role') !== "renderTutor1") {
+      return (
+        <li className="nav-item dropdown">
+          <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Élèves
+          </div>
+          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <Link className="dropdown-item" to="/programs">Réserver un tutorat</Link>
+            <Link className="dropdown-item" torenderTutor="/tutorats">Mes tutorats</Link>
+          </div>
+        </li>
+      );
+    }
+  }
+  
+  renderAdmin() {
+    if(localStorage.getItem('user_role') === "1") {
+      return (
+        <li className="nav-item dropdown">
+          <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Admin
+          </div>
+          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <Link className="dropdown-item" to="/createPrograms">Créer un programme</Link>
+            <Link className="dropdown-item" to="/createCourses">Créer un course</Link>
+          </div>
+        </li>
+      );
+    }
+  }
 
   renderLinks() {
-    if (this.props.authenticated) {
+    if (this.props.authenticated && localStorage.getItem('user_role') === "2") {
       return (
-        <ul className="navbar-nav">
-          <li className="nav-item"><Link className="nav-link" to="/programs">Réserver un tutorat</Link></li>
-          <li className="nav-item"><Link className="nav-link" to="/tutorats">Mes tutorats</Link></li>
-          <li className="nav-item"><Link className="nav-link" to="/calendars">Mes horaires</Link></li>
-          <li className="nav-item"><Link className="nav-link" to="/createPrograms">Créer un programme</Link></li>
-          <li className="nav-item"><Link className="nav-link" to="/createCourses">Créer un course</Link></li>
+
+        <ul className="navbar-nav ml-auto">
+          {this.renderStudent()}
+          {this.renderTutor()}
+          {this.renderAdmin()}
           <li className="nav-item"><Link className="nav-link" to="/signout">Sign Out</Link></li>
         </ul>
 
       );
     } else {
       return(
-        <ul className="navbar-nav">
+        <ul className="navbar-nav ml-auto">
           <li className="nav-item"><Link className="nav-link" to="/signin">Sign In</Link></li>
         </ul>
       );
     }
   }
 
-  render() {
+  render() {renderTutor
     return(
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg  navbar-light bg-light">
           <Link className="navbar-brand" to="/">
-            <img src="https://www.svgrepo.com/show/6289/book-with-apple.svg" width="30" height="30" className="d-inline-block align-top" alt=""/>
+            <img src="../grasset.png" width="30" height="30" className="d-inline-block align-top" alt="logo"/>
             Tutapp
           </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

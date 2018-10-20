@@ -4,8 +4,6 @@ import requireAuth from '../requireAuth';
 import TimePicker from 'react-times';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
 import moment from 'moment';
 import BigCalendar from 'react-big-calendar'
 import Selectable from './Selectable';
@@ -22,18 +20,6 @@ class CalendarsConfig extends Component {
     constructor(props, context){
         super(props, context);
         this.renderTimePicker = this.renderTimePicker.bind(this);
-    }
-
-    renderCalendar(calendar) {
-        return(
-            <Link to={"/calendar/" + calendar.user_id + "/" + calendar.dtavailability} key={calendar.id}>
-                <div className="list-group-item list-group-item-action card card-block mt-1" key={calendar.id}>
-                    <Moment format="DD/MM/YYYY">
-                        {calendar.dtavailability}
-                    </Moment>
-                </div>
-            </Link>
-        );
     }
 
     renderTimePicker() {
