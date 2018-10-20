@@ -61,9 +61,9 @@ class EditProgram extends Component {
         return (
           <div className="container">
             <form onSubmit={this.handleSubmit}>
-                 <h3>Edit Program:</h3>
+                 <h3>Editer un programme:</h3>
                  <div className="form-group">
-                    <label>Title</label>
+                    <label>Titre</label>
                     <input required type="text"
                       className="form-control"
                       onChange={this.handleChange}

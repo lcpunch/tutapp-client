@@ -28,6 +28,7 @@ class CreateProgram extends Component {
       this.props.createProgram(data, () => {
         this.props.history.push('/CreatePrograms');
       })
+
     }
 
     handleChange = (e) => {

@@ -41,6 +41,27 @@ export const fetchPrograms = () => async dispatch => {
     dispatch(hideLoading());
 };
 
+export const fetchAllPrograms = () => async dispatch => {
+    try {
+
+        let webApiUrl = SERVER+'/api/programs/';
+        let tokenStr = localStorage.getItem('token');
+
+        dispatch(showLoading());
+
+        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+
+        var array = response.data.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
+        });
+
+        dispatch({ type: LIST_PROGRAMS, payload: array });
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
 export const fetchProgram = (id) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/programs/'+id;
@@ -50,7 +71,6 @@ export const fetchProgram = (id) => async dispatch => {
 
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
 
-        console.log(response);
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
@@ -63,11 +83,43 @@ export const editProgram = (data, callback) => async dispatch => {
         let webApiUrl = SERVER+'/api/programs/update/'+data.id;
         let tokenStr = localStorage.getItem('token');
 
-        //dispatch(showLoading());
-        const response = await axios.post(webApiUrl, data);
+        dispatch(showLoading());
+        let response = await axios.post(webApiUrl, data);
+
+        webApiUrl = SERVER+'/api/programs/';
+        response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        var array = response.data.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
+        });
+
+        dispatch({ type: LIST_PROGRAMS, payload: array });
 
         callback();
-        //dispatch({ type: LIST_PROGRAMS, payload: response.data });
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
+export const deleteProgram = (data, callback) => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/programs/'+data.id;
+        let tokenStr = localStorage.getItem('token');
+
+        dispatch(showLoading());
+        let response = await axios.delete(webApiUrl, {
+            headers: {"Authorization" : `Bearer ${tokenStr}`}
+        });
+
+        webApiUrl = SERVER+'/api/programs/';
+        response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        var array = response.data.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
+        });
+
+        dispatch({ type: LIST_PROGRAMS, payload: array });
+
+        callback();
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
@@ -82,7 +134,6 @@ export const createProgram = (data, callback) => async dispatch => {
         //dispatch(showLoading());
         const response = await axios.post(webApiUrl, data);
 
-        console.log(response);
         callback();
         //dispatch({ type: LIST_PROGRAMS, payload: response.data });
     } catch (e) {

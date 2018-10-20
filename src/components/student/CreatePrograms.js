@@ -10,17 +10,29 @@ import './ProgramStyle.css';
 class CreatePrograms extends Component {
 
     componentDidMount() {
-         this.props.fetchPrograms();
+         this.props.fetchAllPrograms();
+    }
+
+    constructor(props, context) {
+      super(props, context);
+      this.renderProgram = this.renderProgram.bind(this);
+      this.handleClickOpenDelete = this.handleClickOpenDelete.bind(this);
+
+    }
+
+    handleClickOpenDelete(program) {
+      this.props.deleteProgram(program);
     }
 
     renderProgram(program) {
         return(
-            <Link to={"/editProgram/" + program.id} key={program.id}>
-                <div className="list-group-item list-group-item-action card card-block mt-1" key={program.id}>
-                    <h4 className="card-title">{program.title}</h4>
-                    <p className="card-text">{program.description}</p>
-                </div>
-            </Link>
+          <div className="list-group-item list-group-item-action card card-block mt-1" key={program.id}>
+              <Link to={"/editProgram/" + program.id} key={program.id}>
+                <h4 className="card-title">{program.title}</h4>
+                <p className="card-text">{program.description}</p>
+              </Link>
+              <button className="btn btn-danger" onClick={() => this.handleClickOpenDelete(program)}>Effacer</button>
+          </div>
         );
     }
 
@@ -40,8 +52,7 @@ class CreatePrograms extends Component {
 }
 
 function mapStateToProps(state) {
-
-    return { programs: state.program.data };
+  return { programs: state.program.data };
 }
 
 export default compose(
