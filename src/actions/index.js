@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS } from './types';
+import {
+  AUTH_USER,
+  AUTH_ERROR,
+  LIST_PROGRAMS,
+  FETCH_ALL_COURSES } from './types';
 
 // const SERVER = 'https://tutapp-rs.herokuapp.com';
 const SERVER = 'http://localhost:8000';
@@ -72,11 +76,7 @@ export const fetchAllCourses = () => async dispatch => {
 
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
 
-        var array = response.data.filter((obj, pos, arr) => {
-            return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
-        });
-
-        dispatch({ type: LIST_PROGRAMS, payload: array });
+        dispatch({ type: FETCH_ALL_COURSES, payload: response.data });
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
@@ -106,9 +106,17 @@ export const fetchCourse = (id) => async dispatch => {
 
         dispatch(showLoading());
 
-        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        var response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
 
-        console.log(response.data);
+        webApiUrl = SERVER+'/api/programs/';
+
+        const responsePrograms = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+
+        var array = responsePrograms.data.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
+        });
+
+        response.data.listprograms = array;
 
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
     } catch (e) {
@@ -134,6 +142,22 @@ export const editProgram = (data, callback) => async dispatch => {
         dispatch({ type: LIST_PROGRAMS, payload: array });
 
         callback();
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
+export const editCourse = (data, callback) => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/courses/update/'+data.id;
+        let tokenStr = localStorage.getItem('token');
+
+        dispatch(showLoading());
+        let response = await axios.post(webApiUrl, data);
+
+        callback();
+
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
@@ -195,6 +219,7 @@ export const createProgram = (data, callback) => async dispatch => {
         let webApiUrl = SERVER+'/api/programs/save';
         let tokenStr = localStorage.getItem('token');
 
+
         //dispatch(showLoading());
         const response = await axios.post(webApiUrl, data);
 
@@ -212,7 +237,7 @@ export const createCourse = (data, callback) => async dispatch => {
         let tokenStr = localStorage.getItem('token');
 
         //dispatch(showLoading());
-        const response = await axios.post(webApiUrl, data);
+        await axios.post(webApiUrl, data);
 
         callback();
         //dispatch({ type: LIST_PROGRAMS, payload: response.data });

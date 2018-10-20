@@ -13,7 +13,8 @@ class EditCourse extends Component {
         super(props);
         this.state = {
           title: '',
-          program_id: ''
+          program_id: '',
+          listprograms: []
         }
     }
 
@@ -25,7 +26,8 @@ class EditCourse extends Component {
       if (!isEqual(nextProps.program, this.state.program)) {
         this.setState({...this.state,
           title: nextProps.program.title,
-          program_id: nextProps.program.program_id
+          program_id: nextProps.program.program_id,
+          listprograms: nextProps.program.listprograms
         });
       }
     }
@@ -33,14 +35,14 @@ class EditCourse extends Component {
     handleSubmit = (e) => {
       e.preventDefault();
       const title = this.getTitle.value;
-      const program_id =  3;
+      const program_id =  this.getProgramId.value;
       const data = {
         id: this.props.match.params.id,
         title,
         program_id
       }
 
-      this.props.editProgram(data, () => {
+      this.props.editCourse(data, () => {
         this.props.history.push('/CreateCourses');
       })
     }
@@ -51,9 +53,15 @@ class EditCourse extends Component {
       })
     }
 
+    handleProgramChange = (e) => {
+      this.setState({
+        program_id: e.target.value
+      })
+    }
+
     renderProgram(program) {
         return(
-          <option value={program.id}> {program.title} </option>
+          <option key={program.id} value={program.id}> {program.title} </option>
         );
     }
 
@@ -71,8 +79,11 @@ class EditCourse extends Component {
                       value={this.state.title} placeholder="Title"/>
                   </div>
                   <div className="form-group">
-                    <select>
-                      <option value=""></option>
+                    <label>Programme:</label>
+                    <select className="form-control"
+                      onChange={this.handleProgramChange}
+                      ref={(input)=>this.getProgramId = input}>
+                      {this.state.listprograms.map(this.renderProgram)}
                     </select>
                   </div>
                   <button className="btn btn-primary">Save</button>

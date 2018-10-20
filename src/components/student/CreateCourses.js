@@ -9,8 +9,8 @@ import './ProgramStyle.css';
 
 class CreateCourses extends Component {
 
-    componentDidMount() {
-         this.props.fetchAllCourses();
+    componentWillMount() {
+      this.props.fetchAllCourses();
     }
 
     constructor(props, context) {
@@ -40,7 +40,7 @@ class CreateCourses extends Component {
             <div className="container">
                 <h3 className="mt-3">Courses</h3>
                 <p>Liste de courses disponibles</p>
-                <Link className="btn btn-primary" to="/createCourse">Créer un course</Link>
+                <Link className="btn btn-primary" to="/createCourse">Créer un courses</Link>
                 <br /><br />
                 <div className="list-group">
                     {this.props.programs.map(this.renderProgram)}
@@ -51,7 +51,7 @@ class CreateCourses extends Component {
 }
 
 function mapStateToProps(state) {
-  return { programs: state.program.data };
+  return { programs: state.course.data };
 }
 
 export default compose(
