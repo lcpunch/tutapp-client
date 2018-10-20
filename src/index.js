@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 
-import 'jquery'; 
+import 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 
@@ -21,11 +21,17 @@ import Calendars from './components/student/Calendars';
 import Hours from './components/student/Hours';
 import Tutorats from './components/student/Tutorats';
 import CalendarsConfig from './components/tutor/CalendarsConfig';
+import CreatePrograms from './components/student/CreatePrograms';
+import EditProgram from './components/student/EditProgram';
+import CreateProgram from './components/student/CreateProgram';
+import CreateCourses from './components/student/CreateCourses';
+import EditCourse from './components/student/EditCourse';
+import CreateCourse from './components/student/CreateCourse';
 
 const store = createStore(reducers, {
     auth: { authenticated: localStorage.getItem('token') }
   },
-  applyMiddleware(reduxThunk) 
+  applyMiddleware(reduxThunk)
 );
 
 ReactDOM.render(
@@ -35,6 +41,12 @@ ReactDOM.render(
         <Route path="/" exact component={Welcome} />
         <Route path="/signin" component={Signin} />
         <Route path="/programs" exact component={Programs} />
+        <Route path="/createPrograms" exact component={CreatePrograms} />
+        <Route path="/createProgram" component={CreateProgram} />
+        <Route path="/editProgram/:id" component={EditProgram} />
+        <Route path="/createCourses" exact component={CreateCourses} />
+        <Route path="/createCourse" component={CreateCourse} />
+        <Route path="/editCourse/:id" component={EditCourse} />
         <Route path="/tutorats" exact component={Tutorats} />
         <Route path="/calendars" exact component={CalendarsConfig} />
         <Route path="/programs/:id" component={Courses} />

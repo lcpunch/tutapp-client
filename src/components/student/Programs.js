@@ -7,7 +7,7 @@ import * as actions from '../../actions';
 
 import './ProgramStyle.css';
 
-class Programs extends Component { 
+class Programs extends Component {
 
     componentDidMount() {
          this.props.fetchPrograms();
@@ -45,5 +45,3 @@ export default compose(
     connect(mapStateToProps, actions),
     requireAuth
 )(Programs);
-  
-  

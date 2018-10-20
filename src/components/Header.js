@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Header extends Component {
-  
+
   renderTutor() {
     if(localStorage.getItem('user_role') === "2") {
       return (
@@ -35,12 +35,29 @@ class Header extends Component {
     }
   }
 
+  renderAdmin() {
+    if(localStorage.getItem('user_role') === "1") {
+      return (
+        <li className="nav-item dropdown">
+          <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Admin
+          </div>
+          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <Link className="dropdown-item" to="/createPrograms">Créer un programme</Link>
+            <Link className="dropdown-item" to="/createCourses">Créer un course</Link>
+          </div>
+        </li>
+      );
+    }
+  }
+
   renderLinks() {
-    if (this.props.authenticated && localStorage.getItem('user_role') === "2") {
+    if (this.props.authenticated) {
       return (
         <ul className="navbar-nav ml-auto">
           {this.renderStudent()}
           {this.renderTutor()}
+          {this.renderAdmin()}
           <li className="nav-item"><Link className="nav-link" to="/signout">Sign Out</Link></li>
         </ul>
 
