@@ -24,6 +24,9 @@ import CalendarsConfig from './components/tutor/CalendarsConfig';
 import CreatePrograms from './components/student/CreatePrograms';
 import EditProgram from './components/student/EditProgram';
 import CreateProgram from './components/student/CreateProgram';
+import CreateCourses from './components/student/CreateCourses';
+import EditCourse from './components/student/EditCourse';
+import CreateCourse from './components/student/CreateCourse';
 
 const store = createStore(reducers, {
     auth: { authenticated: localStorage.getItem('token') }
@@ -41,6 +44,9 @@ ReactDOM.render(
         <Route path="/createPrograms" exact component={CreatePrograms} />
         <Route path="/createProgram" component={CreateProgram} />
         <Route path="/editProgram/:id" component={EditProgram} />
+        <Route path="/createCourses" exact component={CreateCourses} />
+        <Route path="/createCourse" component={CreateCourse} />
+        <Route path="/editCourse/:id" component={EditCourse} />
         <Route path="/tutorats" exact component={Tutorats} />
         <Route path="/calendars" exact component={CalendarsConfig} />
         <Route path="/programs/:id" component={Courses} />

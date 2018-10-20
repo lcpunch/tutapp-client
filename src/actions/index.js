@@ -62,6 +62,27 @@ export const fetchAllPrograms = () => async dispatch => {
     dispatch(hideLoading());
 };
 
+export const fetchAllCourses = () => async dispatch => {
+    try {
+
+        let webApiUrl = SERVER+'/api/courses/';
+        let tokenStr = localStorage.getItem('token');
+
+        dispatch(showLoading());
+
+        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+
+        var array = response.data.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
+        });
+
+        dispatch({ type: LIST_PROGRAMS, payload: array });
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
 export const fetchProgram = (id) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/programs/'+id;
@@ -70,6 +91,24 @@ export const fetchProgram = (id) => async dispatch => {
         dispatch(showLoading());
 
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+
+        dispatch({ type: LIST_PROGRAMS, payload: response.data });
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
+export const fetchCourse = (id) => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/courses/'+id;
+        let tokenStr = localStorage.getItem('token');
+
+        dispatch(showLoading());
+
+        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+
+        console.log(response.data);
 
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
     } catch (e) {
@@ -126,6 +165,31 @@ export const deleteProgram = (data, callback) => async dispatch => {
     dispatch(hideLoading());
 };
 
+export const deleteCourse = (data, callback) => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/courses/'+data.id;
+        let tokenStr = localStorage.getItem('token');
+
+        dispatch(showLoading());
+        let response = await axios.delete(webApiUrl, {
+            headers: {"Authorization" : `Bearer ${tokenStr}`}
+        });
+
+        webApiUrl = SERVER+'/api/courses/';
+        response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        var array = response.data.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
+        });
+
+        dispatch({ type: LIST_PROGRAMS, payload: array });
+
+        callback();
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
 export const createProgram = (data, callback) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/programs/save';
@@ -141,6 +205,23 @@ export const createProgram = (data, callback) => async dispatch => {
     }
     dispatch(hideLoading());
 };
+
+export const createCourse = (data, callback) => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/courses/save';
+        let tokenStr = localStorage.getItem('token');
+
+        //dispatch(showLoading());
+        const response = await axios.post(webApiUrl, data);
+
+        callback();
+        //dispatch({ type: LIST_PROGRAMS, payload: response.data });
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
 
 export const fetchCourses = (id) => async dispatch => {
     try {
@@ -274,6 +355,8 @@ export const fetchTutorats = () => async dispatch => {
     }
     dispatch(hideLoading());
 };
+
+
 
 export const signout = () => {
     localStorage.removeItem('token');

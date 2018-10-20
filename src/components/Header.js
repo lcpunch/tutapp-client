@@ -12,6 +12,7 @@ class Header extends Component {
           <li className="nav-item"><Link className="nav-link" to="/tutorats">Mes tutorats</Link></li>
           <li className="nav-item"><Link className="nav-link" to="/calendars">Mes horaires</Link></li>
           <li className="nav-item"><Link className="nav-link" to="/createPrograms">Créer un programme</Link></li>
+          <li className="nav-item"><Link className="nav-link" to="/createCourses">Créer un course</Link></li>
           <li className="nav-item"><Link className="nav-link" to="/signout">Sign Out</Link></li>
         </ul>
 
