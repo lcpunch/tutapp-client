@@ -319,16 +319,28 @@ export const saveTutorat = (calendar) => async dispatch => {
         let tokenStr = localStorage.getItem('token');
         dispatch(showLoading());
 
-        await axios.post(webApiUrl, { 
+        const objSend = { 
             headers: {"Authorization" : `Bearer ${tokenStr}`}, 
             id_calendar: calendar.id,
             tutor_id: calendar.user_id,
             student_id: localStorage.getItem('user_id'),
             status: 0
-        });
+        };
+        
+        console.log(objSend);
+
+        await axios.post(webApiUrl, objSend);
+
+        webApiUrl = SERVER+'/api/send';
+        
+        objSend['content'] = "Un nouveau tutorat a été réservé";
+        objSend['title'] = "Nouveau tutorat";
+
+        await axios.post(webApiUrl, objSend)
+
         webApiUrl = SERVER+'/api/calendar/'+calendar.user_id+'/tutor/'+localStorage.getItem('user_id');
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
-        dispatch({ type: LIST_PROGRAMS, payload: response.data });
+        dispatch({ type: LIST_CALENDARS, payload: response.data });
 
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
@@ -372,7 +384,7 @@ export const saveCalendar = (event) => async dispatch => {
         
         const responseCalendars = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
         
-        dispatch({ type: LIST_PROGRAMS, payload: responseCalendars.data });
+        dispatch({ type: LIST_CALENDARS, payload: responseCalendars.data });
         
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
