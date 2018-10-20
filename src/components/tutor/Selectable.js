@@ -121,6 +121,26 @@ class Selectable extends React.Component {
             />;
   }
 
+  eventStyleGetter(event) {
+    var backgroundColor = '#66a3ff';
+
+    if(event.count >= 1) {
+      backgroundColor = '#00b300';
+    }
+    var style = {
+        backgroundColor: backgroundColor,
+        borderRadius: '5px',
+        opacity: 0.8,
+        color: 'black',
+        border: '0px',
+        textAlign: 'center',
+        fontSize: '0.8em',
+        display: 'block'
+    };
+    return {
+        style: style
+    };
+  }
 
   render() {
     const { localizer } = this.props
@@ -138,6 +158,7 @@ class Selectable extends React.Component {
           defaultDate={new Date()}
           onSelectEvent={event => this.handleSelectEvent(event)}
           onSelectSlot={this.handleSelect}
+          eventPropGetter={(this.eventStyleGetter)}
         />
         <Modal backdrop="static" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Choisissez une heure de début</ModalHeader>
@@ -191,7 +212,11 @@ function mapStateToProps(state) {
 
     let dtstart = new Date(moment(state.program.data[event].dtavailability).format("MM/DD/YYYY"));
     let dtend = new Date(dtstart);
-    let title = state.program.data[event].hrstart.slice(0, 2) + " - " + state.program.data[event].hrfinish.slice(0, 2);
+    let title;
+
+    if(state.program.data[event])
+      title = state.program.data[event].hrstart.slice(0, 2) + " - " + state.program.data[event].hrfinish.slice(0, 2);
+    
     let id = state.program.data[event].id;
     eventObject["start"] = dtstart;
     eventObject["end"] = dtend;
@@ -199,7 +224,6 @@ function mapStateToProps(state) {
     eventObject["id"] = id;
     localevents.push(eventObject);
   }
-
   return { events: localevents };
 }
 

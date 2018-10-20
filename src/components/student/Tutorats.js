@@ -147,7 +147,6 @@ class Tutorats extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state.program.data);
     return { tutorats: state.program.data };
 }
 

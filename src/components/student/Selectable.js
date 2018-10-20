@@ -50,9 +50,10 @@ class Selectable extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.eventStyleGetter = this.eventStyleGetter.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     
     this.props.fetchCalendars(this.props.id);
   }
@@ -87,6 +88,27 @@ class Selectable extends React.Component {
             />;
   }
 
+  eventStyleGetter(event) {
+    var backgroundColor = '#66a3ff';
+
+    if(event.count >= 1) {
+      backgroundColor = '#00b300';
+    }
+    var style = {
+        backgroundColor: backgroundColor,
+        borderRadius: '5px',
+        opacity: 0.8,
+        color: 'black',
+        border: '0px',
+        textAlign: 'center',
+        fontSize: '0.8em',
+        display: 'block'
+    };
+    return {
+        style: style
+    };
+  }
+
   render() {
     const { localizer } = this.props
     const { handleSubmit } = this.props;
@@ -102,7 +124,7 @@ class Selectable extends React.Component {
           defaultView={BigCalendar.Views.MONTH}
           defaultDate={new Date()}
           onSelectEvent={event => this.handleSelect(event)}
-          
+          eventPropGetter={(this.eventStyleGetter)}
         />
         <Modal backdrop="static" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Voulez-vous réserver le tutorat?</ModalHeader>
@@ -134,16 +156,19 @@ function mapStateToProps(state) {
     eventObject = {};
     let dtstart = new Date(moment(state.program.data[event].dtavailability).format("MM/DD/YYYY"));
     let dtend = new Date(dtstart);
-    let title = "Tutorat à donner";
+    let title;
+    if(state.program.data[event])
+      title = "Horaire: "+state.program.data[event].hrstart.slice(0, 5) + " - " + state.program.data[event].hrfinish.slice(0, 5);
     let id = state.program.data[event].id;
     eventObject["start"] = dtstart;
     eventObject["end"] = dtend;
     eventObject["title"] = title;
     eventObject["id"] = id;
     eventObject["user_id"] = state.program.data[event].user_id;
+    eventObject["count"] = state.program.data[event].num_tutorats;
     localevents.push(eventObject);
   }
-
+  
   return { events: localevents };
 }
 

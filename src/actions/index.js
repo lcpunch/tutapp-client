@@ -3,8 +3,8 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS } from './types';
 import moment from 'moment';
 
-const SERVER = 'https://tutapp-rs.herokuapp.com';
-// const SERVER = 'http://localhost:8000';
+// const SERVER = 'https://tutapp-rs.herokuapp.com';
+const SERVER = 'http://localhost:8000';
 
 export const signin = (formProps, callback) => async dispatch => {
     try {
@@ -72,10 +72,11 @@ export const fetchTutors = (id) => async dispatch => {
 
 export const fetchCalendars = (id) => async dispatch => {
     try {
-        let webApiUrl = SERVER+'/api/calendar/'+id+'/tutor';
+        let webApiUrl = SERVER+'/api/calendar/'+id+'/tutor/'+localStorage.getItem('user_id');
         let tokenStr = localStorage.getItem('token');
+        
         dispatch(showLoading());
-        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`}});
         
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
         
@@ -104,14 +105,7 @@ export const saveTutorat = (calendar) => async dispatch => {
         let webApiUrl = SERVER+'/api/tutorat/save';
         let tokenStr = localStorage.getItem('token');
         dispatch(showLoading());
-        console.log('inside saveCalendar');
-        console.log({ 
-            headers: {"Authorization" : `Bearer ${tokenStr}`}, 
-            id_calendar: calendar.id,
-            tutor_id: calendar.user_id,
-            student_id: localStorage.getItem('user_id'),
-            status: 0
-        });
+
         await axios.post(webApiUrl, { 
             headers: {"Authorization" : `Bearer ${tokenStr}`}, 
             id_calendar: calendar.id,
@@ -119,7 +113,7 @@ export const saveTutorat = (calendar) => async dispatch => {
             student_id: localStorage.getItem('user_id'),
             status: 0
         });
-        webApiUrl = SERVER+'/api/calendar/'+calendar.user_id+'/tutor/'+calendar.dtavailability;
+        webApiUrl = SERVER+'/api/calendar/'+calendar.user_id+'/tutor/'+localStorage.getItem('user_id');
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
 
