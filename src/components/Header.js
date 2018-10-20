@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Header extends Component {
-  
+
   renderTutor() {
     if(localStorage.getItem('user_role') === "2") {
       return (
@@ -20,7 +20,7 @@ class Header extends Component {
   }
 
   renderStudent() {
-    if(localStorage.getItem('user_role') !== "renderTutor1") {
+    if(localStorage.getItem('user_role') !== "1") {
       return (
         <li className="nav-item dropdown">
           <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -28,13 +28,13 @@ class Header extends Component {
           </div>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown">
             <Link className="dropdown-item" to="/programs">Réserver un tutorat</Link>
-            <Link className="dropdown-item" torenderTutor="/tutorats">Mes tutorats</Link>
+            <Link className="dropdown-item" to="/tutorats">Mes tutorats</Link>
           </div>
         </li>
       );
     }
   }
-  
+
   renderAdmin() {
     if(localStorage.getItem('user_role') === "1") {
       return (
@@ -52,9 +52,8 @@ class Header extends Component {
   }
 
   renderLinks() {
-    if (this.props.authenticated && localStorage.getItem('user_role') === "2") {
+    if (this.props.authenticated) {
       return (
-
         <ul className="navbar-nav ml-auto">
           {this.renderStudent()}
           {this.renderTutor()}
@@ -72,7 +71,7 @@ class Header extends Component {
     }
   }
 
-  render() {renderTutor
+  render() {
     return(
       <div>
         <nav className="navbar navbar-expand-lg  navbar-light bg-light">
