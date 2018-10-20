@@ -4,27 +4,43 @@ import { connect } from 'react-redux';
 
 class Header extends Component {
   
+  renderTutor() {
+    if(localStorage.getItem('user_role') === "2") {
+      return (
+        <li className="nav-item dropdown">
+          <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Tuteurs
+          </div>
+          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <Link className="dropdown-item" to="/calendars">Mes horaires</Link>
+          </div>
+        </li>
+      );
+    }
+  }
+
+  renderStudent() {
+    if(localStorage.getItem('user_role') !== "1") {
+      return (
+        <li className="nav-item dropdown">
+          <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Élèves
+          </div>
+          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <Link className="dropdown-item" to="/programs">Réserver un tutorat</Link>
+            <Link className="dropdown-item" to="/tutorats">Mes tutorats</Link>
+          </div>
+        </li>
+      );
+    }
+  }
+
   renderLinks() {
-    if (this.props.authenticated) {
+    if (this.props.authenticated && localStorage.getItem('user_role') === "2") {
       return (
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item dropdown">
-            <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Élèves
-            </div>
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <Link className="dropdown-item" to="/programs">Réserver un tutorat</Link>
-              <Link className="dropdown-item" to="/tutorats">Mes tutorats</Link>
-            </div>
-          </li>
-          <li className="nav-item dropdown">
-            <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Tuteurs
-            </div>
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <Link className="dropdown-item" to="/calendars">Mes horaires</Link>
-            </div>
-          </li>
+          {this.renderStudent()}
+          {this.renderTutor()}
           <li className="nav-item"><Link className="nav-link" to="/signout">Sign Out</Link></li>
         </ul>
 

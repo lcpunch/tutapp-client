@@ -205,19 +205,19 @@ function mapStateToProps(state) {
 
   let eventObject;
   const localevents=[];
-
-  for(let event in state.program.data) {
+  
+  for(let event in state.calendar.data) {
     
     eventObject = {};
 
-    let dtstart = new Date(moment(state.program.data[event].dtavailability).format("MM/DD/YYYY"));
+    let dtstart = new Date(moment(state.calendar.data[event].dtavailability).format("MM/DD/YYYY"));
     let dtend = new Date(dtstart);
     let title;
 
-    if(state.program.data[event])
-      title = state.program.data[event].hrstart.slice(0, 2) + " - " + state.program.data[event].hrfinish.slice(0, 2);
+    if(state.calendar.data[event])
+      title = state.calendar.data[event].hrstart.slice(0, 2) + " - " + state.calendar.data[event].hrfinish.slice(0, 2);
     
-    let id = state.program.data[event].id;
+    let id = state.calendar.data[event].id;
     eventObject["start"] = dtstart;
     eventObject["end"] = dtend;
     eventObject["title"] = title;

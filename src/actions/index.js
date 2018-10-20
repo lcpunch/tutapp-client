@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS } from './types';
+import { AUTH_USER, AUTH_ERROR, LIST_PROGRAMS, LIST_CALENDARS } from './types';
 import moment from 'moment';
 
 // const SERVER = 'https://tutapp-rs.herokuapp.com';
@@ -11,8 +11,10 @@ export const signin = (formProps, callback) => async dispatch => {
         dispatch(showLoading());
         const response = await axios.post(SERVER+'/api/login', formProps);
         dispatch({ type: AUTH_USER, payload: response.data.success.token });
+        
         localStorage.setItem('token', response.data.success.token);
         localStorage.setItem('user_id', response.data.id);
+        localStorage.setItem('user_role', response.data.role);
         
         callback();
     } catch (e) {
@@ -78,7 +80,8 @@ export const fetchCalendars = (id) => async dispatch => {
         dispatch(showLoading());
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`}});
         
-        dispatch({ type: LIST_PROGRAMS, payload: response.data });
+        console.log(response);
+        dispatch({ type: LIST_CALENDARS, payload: response.data });
         
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
@@ -214,6 +217,8 @@ export const fetchTutorats = () => async dispatch => {
         dispatch(showLoading());
 
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+
+        console.log(response);
 
         dispatch({ type: LIST_PROGRAMS, payload: response.data });
         
