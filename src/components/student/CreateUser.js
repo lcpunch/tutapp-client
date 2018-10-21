@@ -15,7 +15,8 @@ class CreateUser extends Component {
           email: '',
           program_id: '',
           listprograms: [],
-          role: ''
+          role: '',
+          number: ''
         }
     }
 
@@ -29,12 +30,14 @@ class CreateUser extends Component {
       const program_id =  this.getProgramId.value;
       const email =  this.getEmail.value;
       const role = this.getRole.value;
+      const registration_number =  this.getNumber.value;
       const data = {
         id: this.props.match.params.id,
         name,
         email,
         program_id,
-        role
+        role,
+        registration_number
       }
 
       this.props.createUser(data, () => {
@@ -45,6 +48,12 @@ class CreateUser extends Component {
     handleChange = (e) => {
       this.setState({
         name: e.target.value
+      })
+    }
+
+    handleNumberChange = (e) => {
+      this.setState({
+        number: e.target.value
       })
     }
 
@@ -89,6 +98,14 @@ class CreateUser extends Component {
                     onChange={this.handleChange}
                     ref={(input)=>this.getName = input}
                     value={this.state.name} />
+                </div>
+                <div className="form-group">
+                   <label>Numero:</label>
+                   <input required type="text"
+                     className="form-control"
+                     onChange={this.handleNumberChange}
+                     ref={(input)=>this.getNumber = input}
+                     value={this.state.number} />
                 </div>
                 <div className="form-group">
                    <label>Email:</label>

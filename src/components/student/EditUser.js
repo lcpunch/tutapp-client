@@ -16,7 +16,8 @@ class EditUser extends Component {
           email: '',
           program_id: '',
           listprograms: [],
-          role: ''
+          role: '',
+          number: ''
         }
     }
 
@@ -31,7 +32,8 @@ class EditUser extends Component {
           email: nextProps.program.email,
           program_id: nextProps.program.program_id,
           listprograms: nextProps.program.listprograms,
-          role: nextProps.program.role
+          role: nextProps.program.role,
+          number: nextProps.program.registration_number
         });
       }
     }
@@ -42,12 +44,14 @@ class EditUser extends Component {
       const program_id =  this.getProgramId.value;
       const email =  this.getEmail.value;
       const role = this.getRole.value;
+      const registration_number =  this.getNumber.value;
       const data = {
         id: this.props.match.params.id,
         name,
         email,
         program_id,
-        role
+        role,
+        registration_number
       }
 
       this.props.editUser(data, () => {
@@ -58,6 +62,12 @@ class EditUser extends Component {
     handleChange = (e) => {
       this.setState({
         name: e.target.value
+      })
+    }
+
+    handleNumberChange = (e) => {
+      this.setState({
+        number: e.target.value
       })
     }
 
@@ -96,20 +106,29 @@ class EditUser extends Component {
                       className="form-control"
                       onChange={this.handleChange}
                       ref={(input)=>this.getName = input}
-                      value={this.state.name} placeholder="Title"/>
+                      value={this.state.name} />
                   </div>
+                  <div className="form-group">
+                     <label>Numero:</label>
+                     <input required type="text"
+                       className="form-control"
+                       onChange={this.handleNumberChange}
+                       ref={(input)=>this.getNumber = input}
+                       value={this.state.number} />
+                   </div>
                   <div className="form-group">
                      <label>Email:</label>
                      <input required type="text"
                        className="form-control"
                        onChange={this.handleChangeEmail}
                        ref={(input)=>this.getEmail = input}
-                       value={this.state.email} placeholder="Title"/>
+                       value={this.state.email} />
                   </div>
                   <div className="form-group">
                     <label>Programme:</label>
                     <select className="form-control"
                       onChange={this.handleProgramChange}
+                      value={this.state.program_id}
                       ref={(input)=>this.getProgramId = input}>
                       {this.state.listprograms.map(this.renderProgram)}
                     </select>
