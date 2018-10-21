@@ -7,7 +7,8 @@ import {
   LIST_PROGRAMS,
   LIST_CALENDARS,
   FETCH_ALL_COURSES,
-  FETCH_ALL_USERS
+  FETCH_ALL_USERS,
+  PROFILE_DATA
  } from './types';
 import moment from 'moment';
 
@@ -169,7 +170,7 @@ export const fetchUser = (id) => async dispatch => {
 
         response.data.listprograms = array;
 
-        dispatch({ type: FETCH_ALL_USERS, payload: response.data });
+        dispatch({ type: PROFILE_DATA, payload: response.data });
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
@@ -346,6 +347,9 @@ export const createUser = (data, callback) => async dispatch => {
 export const importUser = (data, callback) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/users/import';
+
+        console.log(data);
+
 
         dispatch(showLoading());
         await axios.post(webApiUrl, data);
