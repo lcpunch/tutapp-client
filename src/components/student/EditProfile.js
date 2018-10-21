@@ -117,7 +117,7 @@ class EditProfile extends Component {
 }
 
 function mapStateToProps(state) {
-  return { program: state.program.data };
+  return { program: state.user.data };
 }
 
 export default compose(

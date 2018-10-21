@@ -169,7 +169,7 @@ export const fetchUser = (id) => async dispatch => {
 
         response.data.listprograms = array;
 
-        dispatch({ type: LIST_PROGRAMS, payload: response.data });
+        dispatch({ type: FETCH_ALL_USERS, payload: response.data });
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }

@@ -25,15 +25,21 @@ class Programs extends Component {
     }
 
     render() {
+      if(this.props.programs.length < 1) {
         return (
-            <div className="container">
-                <h3 className="mt-3">Programmes</h3>
-                <p>Liste de Programmes disponibles</p>
-                <div className="list-group">
-                    {this.props.programs.map(this.renderProgram)}
-                </div>
-            </div>
+          <div> Loading...</div>
         );
+      };
+
+      return (
+        <div className="container">
+          <h3 className="mt-3">Programmes</h3>
+          <p>Liste de Programmes disponibles</p>
+          <div className="list-group">
+            {this.props.programs.map(this.renderProgram)}
+          </div>
+        </div>
+      );
     }
 }
 
