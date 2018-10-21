@@ -343,6 +343,21 @@ export const createUser = (data, callback) => async dispatch => {
     dispatch(hideLoading());
 };
 
+export const importUser = (data, callback) => async dispatch => {
+    try {
+        let webApiUrl = SERVER+'/api/users/import';
+
+        console.log(data);
+
+        dispatch(showLoading());
+        await axios.post(webApiUrl, data);
+
+        callback();
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
 
 export const fetchCourses = (id) => async dispatch => {
     try {
