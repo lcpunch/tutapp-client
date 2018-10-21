@@ -347,8 +347,6 @@ export const importUser = (data, callback) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/users/import';
 
-        console.log(data);
-
         dispatch(showLoading());
         await axios.post(webApiUrl, data);
 
