@@ -218,7 +218,6 @@ export const editUser = (data, callback) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/users/update/'+data.id;
 
-        console.log(data);
         dispatch(showLoading());
         await axios.post(webApiUrl, data);
 

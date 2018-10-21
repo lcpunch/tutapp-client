@@ -30,6 +30,7 @@ import CreateCourse from './components/student/CreateCourse';
 import CreateUsers from './components/student/CreateUsers';
 import EditUser from './components/student/EditUser';
 import CreateUser from './components/student/CreateUser';
+import EditProfile from './components/student/EditProfile';
 
 const store = createStore(reducers, {
     auth: { authenticated: localStorage.getItem('token') }
@@ -53,6 +54,7 @@ ReactDOM.render(
         <Route path="/createUsers" exact component={CreateUsers} />
         <Route path="/editUser/:id" component={EditUser} />
         <Route path="/createUser" component={CreateUser} />
+        <Route path="/editProfile/:id" component={EditProfile} />
         <Route path="/tutorats" exact component={Tutorats} />
         <Route path="/calendars" exact component={CalendarsConfig} />
         <Route path="/programs/:id" component={Courses} />

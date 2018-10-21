@@ -29,6 +29,7 @@ class Header extends Component {
           <div className="dropdown-menu" aria-labelledby="navbarDropdown">
             <Link className="dropdown-item" to="/programs">Réserver un tutorat</Link>
             <Link className="dropdown-item" to="/tutorats">Mes tutorats</Link>
+            <Link className="dropdown-item" to={"/editProfile/" + localStorage.getItem('user_id')}>Modifier mon profil</Link>
           </div>
         </li>
       );
