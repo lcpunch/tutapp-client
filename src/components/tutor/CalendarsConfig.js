@@ -47,12 +47,9 @@ class CalendarsConfig extends Component {
     }
     
     openModalReport() {
-        // Default export is a4 paper, portrait, using milimeters for units
         this.setState({
             modal: true
         })
-
-        
     }
 
     generateReport() {

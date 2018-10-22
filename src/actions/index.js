@@ -156,10 +156,9 @@ export const editProgram = (data, callback) => async dispatch => {
 export const editCourse = (data, callback) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/courses/update/'+data.id;
-        let tokenStr = localStorage.getItem('token');
 
         dispatch(showLoading());
-        let response = await axios.post(webApiUrl, data);
+        await axios.post(webApiUrl, data);
 
         callback();
 
@@ -222,14 +221,11 @@ export const deleteCourse = (data, callback) => async dispatch => {
 export const createProgram = (data, callback) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/programs/save';
-        let tokenStr = localStorage.getItem('token');
 
-
-        //dispatch(showLoading());
-        const response = await axios.post(webApiUrl, data);
+        dispatch(showLoading());
+        await axios.post(webApiUrl, data);
 
         callback();
-        //dispatch({ type: LIST_PROGRAMS, payload: response.data });
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
@@ -239,13 +235,11 @@ export const createProgram = (data, callback) => async dispatch => {
 export const createCourse = (data, callback) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/courses/save';
-        let tokenStr = localStorage.getItem('token');
 
-        //dispatch(showLoading());
+        dispatch(showLoading());
         await axios.post(webApiUrl, data);
 
         callback();
-        //dispatch({ type: LIST_PROGRAMS, payload: response.data });
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
@@ -283,7 +277,7 @@ export const fetchTutors = (id) => async dispatch => {
 
 export const fetchCalendars = (id) => async dispatch => {
     try {
-        let webApiUrl = SERVER+'/api/calendar/'+id+'/tutor/'+localStorage.getItem('user_id');
+        let webApiUrl = SERVER+'/api/calendar/'+localStorage.getItem('user_id')+'/tutor';
         let tokenStr = localStorage.getItem('token');
         
         dispatch(showLoading());
@@ -379,6 +373,7 @@ export const saveCalendar = (event) => async dispatch => {
             hrfinish: moment(event.end).format("HH:mm"),
             user_id: localStorage.getItem('user_id')
         });
+        
         
         webApiUrl = SERVER+'/api/calendar/'+localStorage.getItem('user_id')+'/tutor';
         
