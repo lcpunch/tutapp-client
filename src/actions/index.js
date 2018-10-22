@@ -455,6 +455,7 @@ export const fetchTutorats = () => async dispatch => {
 export const signout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user_id');
+    localStorage.removeItem('user_role');
 
     return {
         type: AUTH_USER,

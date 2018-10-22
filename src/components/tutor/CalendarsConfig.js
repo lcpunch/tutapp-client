@@ -61,8 +61,34 @@ class CalendarsConfig extends Component {
         if(document.getElementById('month').value !== "") {
             axios.get('http://localhost:8000/api/tutorat/'+localStorage.getItem('user_id')+'/'+document.getElementById('month').value)
             .then((response) => {
-                doc.text('Rapport de tutorats', 10, 10)
-                doc.text('dara', 10, 20)
+
+                var arrayResponse = response.data.filter((obj, pos, arr) => {
+                    return arr.map(mapObj => mapObj['dtavailability']).indexOf(obj['dtavailability']) === pos;
+                });
+
+                let line = 10;
+                doc.text("Tuteur: " + arrayResponse[0].name, 10, line)
+                line += 5;
+                doc.line(0, line, 1000, line)
+                line += 15;
+                doc.setFontSize(10);
+                doc.setFontStyle('bold');
+                doc.text("Date", 10, line)
+                doc.text("Heure de début", 45, line)
+                doc.text("Heure de fin", 75, line)
+                doc.setFontStyle('normal');
+                line += 3;
+                for(let tutorat of arrayResponse) {
+                    line += 8;
+                    doc.text(tutorat.dtavailability, 10, line)
+                    doc.text(tutorat.hrstart, 50, line)
+                    doc.text(tutorat.hrfinish, 75, line)
+                }
+                line+=5;
+                doc.line(0, line, 1000, line)
+                line += 20;
+                doc.setFontSize(22);
+                doc.text("Total d'heures: "+arrayResponse.length, 130, line)
                 doc.save('a4.pdf');
             })
         }
