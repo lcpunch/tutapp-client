@@ -39,15 +39,16 @@ class Header extends Component {
   renderAdmin() {
     if(this.props.user_data && this.props.user_data.user_role === 1) {
       return (
-        <li className="nav-item dropdown">
+        <li className="nav-item dropdown ">
           <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Admin
+            Administrateur
           </div>
-          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+          <div className="dropdown-menu  dropdown-menu-right" aria-labelledby="navbarDropdown">
             <Link className="dropdown-item" to="/createPrograms">Créer un programme</Link>
             <Link className="dropdown-item" to="/createCourses">Créer un course</Link>
-            <Link className="dropdown-item" to="/createUsers">Créer un utilizateur</Link>
+            <Link className="dropdown-item" to="/createUsers">Créer un utilisateur</Link>
             <Link className="dropdown-item" to="/importStudents">Importation d'étudiants</Link>
+            <Link className="dropdown-item" to="/createTuteurs">Associer tuteurs</Link>
           </div>
         </li>
       );
@@ -61,14 +62,14 @@ class Header extends Component {
           {this.renderStudent()}
           {this.renderTutor()}
           {this.renderAdmin()}
-          <li className="nav-item"><Link className="nav-link" to="/signout">Sign Out</Link></li>
+          <li className="nav-item"><Link className="nav-link" to="/signout">Se déconnecter</Link></li>
         </ul>
 
       );
     } else {
       return(
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item"><Link className="nav-link" to="/signin">Sign In</Link></li>
+          <li className="nav-item"><Link className="nav-link" to="/signin">Se connecter</Link></li>
         </ul>
       );
     }
