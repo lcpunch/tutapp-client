@@ -20,7 +20,7 @@ class Header extends Component {
   }
 
   renderStudent() {
-    if(localStorage.getItem('user_role') !== "1") {
+    if(localStorage.getItem('user_role') !== "1" && this.props.user_data) {
       return (
         <li className="nav-item dropdown">
           <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -29,6 +29,7 @@ class Header extends Component {
           <div className="dropdown-menu" aria-labelledby="navbarDropdown">
             <Link className="dropdown-item" to="/programs">Réserver un tutorat</Link>
             <Link className="dropdown-item" to="/tutorats">Mes tutorats</Link>
+            <Link className="dropdown-item" to={"/editProfile/" + this.props.user_data.user_id}>Modifier mon profil</Link>
           </div>
         </li>
       );
@@ -45,6 +46,8 @@ class Header extends Component {
           <div className="dropdown-menu" aria-labelledby="navbarDropdown">
             <Link className="dropdown-item" to="/createPrograms">Créer un programme</Link>
             <Link className="dropdown-item" to="/createCourses">Créer un course</Link>
+            <Link className="dropdown-item" to="/createUsers">Créer un utilizateur</Link>
+            <Link className="dropdown-item" to="/importStudents">Importation d'étudiants</Link>
           </div>
         </li>
       );
@@ -93,7 +96,8 @@ class Header extends Component {
 
 function mapStateToProps(state) {
   return {
-    authenticated: state.auth.authenticated
+    authenticated: state.auth.authenticated,
+    user_data: state.auth.user_data
   };
 }
 

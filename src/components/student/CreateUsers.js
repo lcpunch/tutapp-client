@@ -7,31 +7,32 @@ import * as actions from '../../actions';
 
 import './ProgramStyle.css';
 
-class CreateCourses extends Component {
+class CreateUsers extends Component {
 
     componentWillMount() {
-      this.props.fetchAllCourses();
+      this.props.fetchAllUsers();
     }
 
     constructor(props, context) {
       super(props, context);
       this.renderProgram = this.renderProgram.bind(this);
       this.handleClickOpenDelete = this.handleClickOpenDelete.bind(this);
+
     }
 
     handleClickOpenDelete(program) {
-      this.props.deleteCourse(program, () => {
-        this.props.history.push('/CreateCourses');
+      this.props.deleteUser(program, () => {
+        this.props.history.push('/CreateUsers');
       });
     }
 
     renderProgram(program) {
         return(
           <div className="list-group-item list-group-item-action card card-block mt-1" key={program.id}>
-              <Link to={"/editCourse/" + program.id} key={program.id}>
-                <h4 className="card-title">{program.title}</h4>
+              <Link to={"/editUser/" + program.id} key={program.id}>
+                <p className="card-text">{program.name} - {program.email}</p>
               </Link>
-              <button className="btn btn-danger" onClick={() => this.handleClickOpenDelete(program)}>Effacer</button>
+                <button className="btn btn-danger" onClick={() => this.handleClickOpenDelete(program)}>Effacer</button>
           </div>
         );
     }
@@ -39,9 +40,9 @@ class CreateCourses extends Component {
     render() {
         return (
             <div className="container">
-                <h3 className="mt-3">Courses</h3>
-                <p>Liste de courses disponibles</p>
-                <Link className="btn btn-primary" to="/createCourse">Créer un courses</Link>
+                <h3 className="mt-3">Utilizateurs:</h3>
+                <p>Liste de utilizateurs disponibles</p>
+                <Link className="btn btn-primary" to="/createUser">Créer un utilizateur</Link>
                 <br /><br />
                 <div className="list-group">
                     {this.props.programs.map(this.renderProgram)}
@@ -52,10 +53,10 @@ class CreateCourses extends Component {
 }
 
 function mapStateToProps(state) {
-  return { programs: state.course.data };
+  return { programs: state.user.data };
 }
 
 export default compose(
     connect(mapStateToProps, actions),
     requireAuth
-)(CreateCourses);
+)(CreateUsers);

@@ -49,20 +49,20 @@ class CreateProgram extends Component {
             <form onSubmit={this.handleSubmit}>
                  <h3>Créer un programme</h3>
                  <div className="form-group">
-                    <label>Titre</label>
+                    <label>Numero</label>
                     <input required type="text"
                       className="form-control"
                       onChange={this.handleChange}
                       ref={(input)=>this.getTitle = input}
-                      value={this.state.title} placeholder="Title"/>
+                      value={this.state.title} />
                   </div>
                   <div className="form-group">
-                    <label>Description</label>
-                    <textarea required rows="5"
+                    <label>Titre</label>
+                    <input required
                       className="form-control"
                       onChange={this.handleDescriptionChange}
                       ref={(input)=>this.getDescription = input}
-                      value={this.state.description} cols="28" placeholder="Description" />
+                      value={this.state.description} />
                   </div>
                   <button className="btn btn-primary">Save</button>
             </form>
