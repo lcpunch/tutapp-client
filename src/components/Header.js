@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 class Header extends Component {
 
   renderTutor() {
-    if(localStorage.getItem('user_role') === "2") {
+    if(this.props.user_data && this.props.user_data.user_role === 2) {
       return (
         <li className="nav-item dropdown">
           <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -20,7 +20,7 @@ class Header extends Component {
   }
 
   renderStudent() {
-    if(localStorage.getItem('user_role') !== "1" && this.props.user_data) {
+    if(this.props.user_data && this.props.user_data.user_role !== 1) {
       return (
         <li className="nav-item dropdown">
           <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -37,7 +37,7 @@ class Header extends Component {
   }
 
   renderAdmin() {
-    if(localStorage.getItem('user_role') === "1") {
+    if(this.props.user_data && this.props.user_data.user_role === 1) {
       return (
         <li className="nav-item dropdown">
           <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
