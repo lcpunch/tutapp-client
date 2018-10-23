@@ -32,7 +32,12 @@ export const signin = (formProps, callback) => async dispatch => {
         localStorage.setItem('user_id', response.data.id);
         localStorage.setItem('user_role', response.data.role);
 
-        callback();
+        if(response.data.role === 1) {
+            callback('/createPrograms');
+        } else {
+            callback('/programs');
+        }
+
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
