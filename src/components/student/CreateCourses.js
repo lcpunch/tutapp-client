@@ -20,9 +20,7 @@ class CreateCourses extends Component {
     }
 
     handleClickOpenDelete(program) {
-      this.props.deleteCourse(program, () => {
-        this.props.history.push('/CreateCourses');
-      });
+      this.props.deleteCourse(program);
     }
 
     renderProgram(program) {

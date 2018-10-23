@@ -21,9 +21,7 @@ class CreateUsers extends Component {
     }
 
     handleClickOpenDelete(program) {
-      this.props.deleteUser(program, () => {
-        this.props.history.push('/CreateUsers');
-      });
+      this.props.deleteUser(program);
     }
 
     renderProgram(program) {
