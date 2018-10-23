@@ -105,7 +105,6 @@ class Selectable extends React.Component {
     }
 
     this.setState({ modal: false });
-    
     this.props.saveCalendar(event);
   };
 
