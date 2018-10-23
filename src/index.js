@@ -34,7 +34,8 @@ import EditProfile from './components/student/EditProfile';
 import ImportStudents from './components/student/ImportStudents';
 
 const store = createStore(reducers, {
-    auth: { authenticated: localStorage.getItem('token') }
+    auth: { authenticated: localStorage.getItem('token'),
+    user_data:{user_role: parseInt(localStorage.getItem('user_role'))} }
   },
   applyMiddleware(reduxThunk)
 );

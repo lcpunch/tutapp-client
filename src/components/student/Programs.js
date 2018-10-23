@@ -25,11 +25,10 @@ class Programs extends Component {
     }
 
     render() {
-      if(this.props.programs.length < 1) {
-        return (
-          <div> Loading...</div>
-        );
-      };
+
+      if(!Array.isArray(this.props.programs) || this.props.programs.length < 1) {
+        return <div>Loading...</div>;
+      }
 
       return (
         <div className="container">

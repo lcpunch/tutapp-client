@@ -177,6 +177,8 @@ export const fetchUser = (id) => async dispatch => {
 
         response.data.listprograms = array;
 
+        console.log(response.data);
+
         dispatch({ type: PROFILE_DATA, payload: response.data });
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
@@ -261,25 +263,20 @@ export const deleteProgram = (data, callback) => async dispatch => {
     dispatch(hideLoading());
 };
 
-export const deleteCourse = (data, callback) => async dispatch => {
+export const deleteCourse = data => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/courses/'+data.id;
         let tokenStr = localStorage.getItem('token');
 
         dispatch(showLoading());
-        let response = await axios.delete(webApiUrl, {
+        await axios.delete(webApiUrl, {
             headers: {"Authorization" : `Bearer ${tokenStr}`}
         });
 
         webApiUrl = SERVER+'/api/courses/';
-        response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
-        var array = response.data.filter((obj, pos, arr) => {
-            return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
-        });
+        let response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        dispatch({ type: FETCH_ALL_COURSES, payload: response.data });
 
-        dispatch({ type: LIST_PROGRAMS, payload: array });
-
-        callback();
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
@@ -292,16 +289,14 @@ export const deleteUser = (data, callback) => async dispatch => {
         let tokenStr = localStorage.getItem('token');
 
         dispatch(showLoading());
-        let response = await axios.delete(webApiUrl, {
+        await axios.delete(webApiUrl, {
             headers: {"Authorization" : `Bearer ${tokenStr}`}
         });
 
         webApiUrl = SERVER+'/api/users/';
-        response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        let response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
 
-        dispatch({ type: LIST_PROGRAMS, payload: response.data });
-
-        callback();
+        dispatch({ type: FETCH_ALL_USERS, payload: response.data });
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
     }
