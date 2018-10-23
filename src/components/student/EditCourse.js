@@ -69,20 +69,22 @@ class EditCourse extends Component {
         return (
           <div className="container">
             <form onSubmit={this.handleSubmit}>
-                 <h3>Editer un programme:</h3>
+                 <h3>Editer un course:</h3>
                  <div className="form-group">
                     <label>Titre</label>
                     <input required type="text"
                       className="form-control"
                       onChange={this.handleChange}
                       ref={(input)=>this.getTitle = input}
-                      value={this.state.title} placeholder="Title"/>
+                      value={this.state.title} />
                   </div>
                   <div className="form-group">
                     <label>Programme:</label>
                     <select className="form-control"
                       onChange={this.handleProgramChange}
-                      ref={(input)=>this.getProgramId = input}>
+                      ref={(input)=>this.getProgramId = input}
+                      value={this.state.program_id}
+                    >
                       {this.state.listprograms.map(this.renderProgram)}
                     </select>
                   </div>

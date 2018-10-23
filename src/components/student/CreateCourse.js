@@ -56,7 +56,7 @@ class CreateCourse extends Component {
 
     render() {
 
-      if(this.props.program.length < 1) {
+      if(!Array.isArray(this.props.program) || this.props.program.length < 1) {
         return <div>Loading...</div>;
       }
 
@@ -70,7 +70,7 @@ class CreateCourse extends Component {
                     className="form-control"
                     onChange={this.handleChange}
                     ref={(input)=>this.getTitle = input}
-                    value={this.state.title} placeholder="Title"/>
+                    value={this.state.title} />
                 </div>
                 <div className="form-group">
                   <label>Programme:</label>
