@@ -516,7 +516,7 @@ export const deleteCalendar = (event) => async dispatch => {
 
         webApiUrl = SERVER+'/api/calendar/'+localStorage.getItem('user_id')+'/tutor';
         const responseCalendars = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
-        dispatch({ type: LIST_PROGRAMS, payload: responseCalendars.data });
+        dispatch({ type: LIST_CALENDARS, payload: responseCalendars.data });
 
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });

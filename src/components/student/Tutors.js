@@ -27,8 +27,8 @@ class Tutors extends Component {
     render() {
         return (
             <div className="container">
-                <h3 className="mt-3">Tutors</h3>
-                <p>List of tutors</p>
+                <h3 className="mt-3">Tuteurs</h3>
+                <p>Liste de tuteurs</p>
                 <div className="list-group mt-3">
                     {this.props.tutors.map(this.renderTutor)}
                 </div>

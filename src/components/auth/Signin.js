@@ -17,12 +17,12 @@ class Signin extends Component {
     const { handleSubmit } = this.props;
     return (
       <div className="container">
-        <div class="row">
-          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div class="card card-signin my-5">
-              <div class="card-body">
-                <h5 class="card-title text-center">Se connecter dans mon compte</h5>
-                <form class="form-signin" onSubmit={handleSubmit(this.onSubmit)}>
+        <div className="row">
+          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div className="card card-signin my-5">
+              <div className="card-body">
+                <h5 className="card-title text-center">Se connecter dans mon compte</h5>
+                <form className="form-signin" onSubmit={handleSubmit(this.onSubmit)}>
                   <div className="form-group">
                     <label>Email</label>
                     <Field
