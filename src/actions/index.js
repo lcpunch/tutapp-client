@@ -3,6 +3,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 import {
   AUTH_USER,
+  USER_DATA,
   AUTH_ERROR,
   LIST_PROGRAMS,
   LIST_CALENDARS,
@@ -18,8 +19,11 @@ const SERVER = 'http://localhost:8000';
 export const signin = (formProps, callback) => async dispatch => {
     try {
         dispatch(showLoading());
+
         const response = await axios.post(SERVER+'/api/login', formProps);
+
         dispatch({ type: AUTH_USER, payload: response.data.success.token });
+        dispatch({ type: USER_DATA, payload: {user_id: response.data.id} });
 
         localStorage.setItem('token', response.data.success.token);
         localStorage.setItem('user_id', response.data.id);
@@ -348,9 +352,6 @@ export const importUser = (data, callback) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/users/import';
 
-        console.log(data);
-
-
         dispatch(showLoading());
         await axios.post(webApiUrl, data);
 
@@ -551,6 +552,7 @@ export const fetchTutorats = () => async dispatch => {
 export const signout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user_id');
+    localStorage.removeItem('user_role');
 
     return {
         type: AUTH_USER,

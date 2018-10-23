@@ -1,4 +1,5 @@
 export const AUTH_USER = 'auth_user';
+export const USER_DATA = 'user_data';
 export const AUTH_ERROR = 'auth_error';
 export const LIST_PROGRAMS = 'list_programs';
 export const FETCH_ALL_COURSES = 'fetch_all_courses';
