@@ -8,7 +8,7 @@ import * as actions from '../../actions';
 class Programs extends Component {
 
     componentDidMount() {
-         this.props.fetchAllPrograms();
+        this.props.fetchAllPrograms();
     }
 
     renderProgram(program) {
@@ -24,19 +24,21 @@ class Programs extends Component {
 
     render() {
 
-      if(!Array.isArray(this.props.programs) || this.props.programs.length < 1) {
-        return <div>Loading...</div>;
-      }
 
-      return (
-        <div className="container">
-          <h3 className="mt-3">Programmes</h3>
-          <p>Liste de Programmes disponibles</p>
-          <div className="list-group">
-            {this.props.programs.map(this.renderProgram)}
-          </div>
-        </div>
-      );
+
+        if(!Array.isArray(this.props.programs) || this.props.programs.length < 1) {
+            return <div>Loading...</div>;
+        }
+
+        return (
+            <div className="container">
+                <h3 className="mt-3">Programmes</h3>
+                <p>Liste de Programmes disponibles</p>
+                <div className="list-group">
+                    {this.props.programs.map(this.renderProgram)}
+                </div>
+            </div>
+        );
     }
 }
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as actions from '../../actions';
 
-import './ProgramStyle.css';
+import '../Styles.css';
 
 class CreatePrograms extends Component {
 
@@ -26,12 +26,20 @@ class CreatePrograms extends Component {
 
     renderProgram(program) {
         return(
+          
           <div className="list-group-item list-group-item-action card card-block mt-1" key={program.id}>
-              <Link to={"/editProgram/" + program.id} key={program.id}>
-                <h4 className="card-title">{program.title}</h4>
-                <p className="card-text">{program.description}</p>
-              </Link>
-              <button className="btn btn-danger" onClick={() => this.handleClickOpenDelete(program)}>Effacer</button>
+              <div className="media">
+                <Link to={"/editProgram/" + program.id} className="pull-left mr-2">
+                  <img src="programmes.png" alt="edit" style={{maxWidth: '80px', maxHeight: '80px'}} />
+                </Link>
+                <div className="media-body">
+                  <h4 className="title">
+                    {program.title}
+                  </h4>
+                  <p className="summary">{program.description}</p>
+                </div>
+                <span onClick={() => this.handleClickOpenDelete(program)}>&#10008;</span>
+              </div>
           </div>
         );
     }
