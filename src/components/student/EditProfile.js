@@ -84,7 +84,7 @@ class EditProfile extends Component {
         return (
           <div className="container">
             <form onSubmit={this.handleSubmit}>
-                 <h3>Editer un utilizateur:</h3>
+                 <h3>Editer un utilisateur:</h3>
                  <div className="form-group">
                     <label>Nom:</label>
                     <input required type="text"
