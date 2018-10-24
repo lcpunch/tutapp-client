@@ -64,7 +64,7 @@ class CreateProgram extends Component {
                       ref={(input)=>this.getDescription = input}
                       value={this.state.description} />
                   </div>
-                  <button className="btn btn-primary">Save</button>
+                  <button className="btn btn-primary">Sauvegarder</button>
             </form>
           </div>
         );

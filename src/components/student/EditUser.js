@@ -99,7 +99,7 @@ class EditUser extends Component {
         return (
           <div className="container">
             <form onSubmit={this.handleSubmit}>
-                 <h3>Editer un utilizateur:</h3>
+                 <h3>Editer un utilisateur:</h3>
                  <div className="form-group">
                     <label>Nom:</label>
                     <input required type="text"
@@ -143,7 +143,7 @@ class EditUser extends Component {
                         <option key="3" value="3"> Élèves </option>
                     </select>
                   </div>
-                  <button className="btn btn-primary">Save</button>
+                  <button className="btn btn-primary">Sauvegarder</button>
             </form>
           </div>
         );

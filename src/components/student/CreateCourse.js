@@ -81,7 +81,7 @@ class CreateCourse extends Component {
                     {this.props.program.map(this.renderProgram)}
                   </select>
                 </div>
-                <button className="btn btn-primary">Save</button>
+                <button className="btn btn-primary">Sauvegarder</button>
           </form>
         </div>
       );

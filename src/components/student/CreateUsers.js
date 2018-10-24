@@ -26,20 +26,28 @@ class CreateUsers extends Component {
 
     renderProgram(program) {
         return(
-          <div className="list-group-item list-group-item-action card card-block mt-1" key={program.id}>
-              <Link to={"/editUser/" + program.id} key={program.id}>
-                <p className="card-text">{program.name} - {program.email}</p>
-              </Link>
-                <button className="btn btn-danger" onClick={() => this.handleClickOpenDelete(program)}>Effacer</button>
-          </div>
+            <div className="list-group-item list-group-item-action card card-block mt-1" key={program.id}>
+                <div className="media">
+                    <Link to={"/editUser/" + program.id} className="pull-left mr-2">
+                        <img src="programmes.png" alt="edit" style={{maxWidth: '50px', maxHeight: '50px'}} />
+                    </Link>
+                    <div className="media-body">
+                    <h4 className="title">
+                        {program.name}
+                    </h4>
+                    <p className="summary">{program.email}</p>
+                    </div>
+                    <span onClick={() => this.handleClickOpenDelete(program)}>&#10008;</span>
+                </div>
+            </div>
         );
     }
 
     render() {
         return (
             <div className="container">
-                <h3 className="mt-3">Utilizateurs:</h3>
-                <p>Liste de utilizateurs disponibles</p>
+                <h3 className="mt-3">Utilisateurs:</h3>
+                <p>Liste de utilisateurs disponibles</p>
                 <Link className="btn btn-primary" to="/createUser">Créer un utilizateur</Link>
                 <br /><br />
                 <div className="list-group">

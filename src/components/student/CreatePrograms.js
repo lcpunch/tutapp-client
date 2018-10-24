@@ -17,7 +17,6 @@ class CreatePrograms extends Component {
       super(props, context);
       this.renderProgram = this.renderProgram.bind(this);
       this.handleClickOpenDelete = this.handleClickOpenDelete.bind(this);
-
     }
 
     handleClickOpenDelete(program) {
@@ -30,7 +29,7 @@ class CreatePrograms extends Component {
           <div className="list-group-item list-group-item-action card card-block mt-1" key={program.id}>
               <div className="media">
                 <Link to={"/editProgram/" + program.id} className="pull-left mr-2">
-                  <img src="programmes.png" alt="edit" style={{maxWidth: '80px', maxHeight: '80px'}} />
+                  <img src="programmes.png" alt="edit" style={{maxWidth: '50px', maxHeight: '50px'}} />
                 </Link>
                 <div className="media-body">
                   <h4 className="title">

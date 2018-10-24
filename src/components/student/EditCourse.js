@@ -88,7 +88,7 @@ class EditCourse extends Component {
                       {this.state.listprograms.map(this.renderProgram)}
                     </select>
                   </div>
-                  <button className="btn btn-primary">Save</button>
+                  <button className="btn btn-primary">Sauvegarder</button>
             </form>
           </div>
         );

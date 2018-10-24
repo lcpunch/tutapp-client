@@ -47,7 +47,7 @@ class ImportStudents extends Component {
                     <label>File:</label>
                     <input type="file" id="input" onChange={this.handleChange} />
                  </div>
-                 <button className="btn btn-primary">Save</button>
+                 <button className="btn btn-primary">Importer</button>
             </form>
           </div>
         );

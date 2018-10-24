@@ -170,9 +170,6 @@ color: #fff;
 .rounded-circle{
     border-radius: 50%;
 }
-.form-control{
-    color: white !important;
-}
 
 .form-control:focus{
     box-shadow: none;

@@ -9,9 +9,21 @@ class Signout extends Component {
     }
 
     render() {
-        return <div>Merci d'avoir utilisé notre système! Voilà une patate.
-            <div><img src="https://c1.staticflickr.com/1/100/287968353_a0c14b44c1_z.jpg?zz=1" alt="Smiley face" /></div>
-        </div>
+        return (
+            <div className="container">
+                <div className="row mt-3">
+                    <div className="col-sm">
+                    
+                    </div>
+                    <div className="col-sm">
+                        Merci d'avoir utilisé notre système.
+                    </div>
+                    <div className="col-sm">
+                    
+                    </div>
+                </div>
+            </div>
+        );
     }
 }
 

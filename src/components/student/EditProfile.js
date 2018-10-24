@@ -109,7 +109,7 @@ class EditProfile extends Component {
                        ref={(input)=>this.getPassword = input}
                        value={this.state.password} />
                   </div>
-                  <button className="btn btn-primary">Save</button>
+                  <button className="btn btn-primary">Sauvegarder</button>
             </form>
           </div>
         );
