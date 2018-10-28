@@ -46,7 +46,7 @@ class Header extends Component {
           </div>
           <div className="dropdown-menu  dropdown-menu-right" aria-labelledby="navbarDropdown">
             <Link className="dropdown-item" to="/createPrograms">Créer un programme</Link>
-            <Link className="dropdown-item" to="/createCourses">Créer un course</Link>
+            <Link className="dropdown-item" to="/createCourses">Créer un cours</Link>
             <Link className="dropdown-item" to="/createUsers">Créer un utilisateur</Link>
             <Link className="dropdown-item" to="/importStudents">Importation d'étudiants</Link>
             <Link className="dropdown-item" to="/createTuteurs">Associer tuteurs</Link>
