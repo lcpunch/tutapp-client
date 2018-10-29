@@ -43,17 +43,29 @@ class CreatePrograms extends Component {
         );
     }
 
+    renderCreateButton() {
+      return(
+        <div>
+          <h3 className="mt-3">Programmes</h3>
+          <p>Liste de Programmes disponibles</p>
+          <Link className="btn btn-primary" to="/createProgram">Créer un programme</Link>
+        </div>
+      );
+    }
+
     render() {
 
       if(!Array.isArray(this.props.programs) || this.props.programs.length < 1) {
-        return <div>Loading...</div>;
+        return (
+          <div className="container">
+            {this.renderCreateButton()}
+          </div>
+        );
       }
 
       return (
           <div className="container">
-              <h3 className="mt-3">Programmes</h3>
-              <p>Liste de Programmes disponibles</p>
-              <Link className="btn btn-primary" to="/createProgram">Créer un programme</Link>
+              {this.renderCreateButton()}
               <br /><br />
               <div className="list-group">
                   {this.props.programs.map(this.renderProgram)}

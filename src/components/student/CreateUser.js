@@ -142,6 +142,7 @@ class CreateUser extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state.program.data);
   return { program: state.program.data };
 }
 
