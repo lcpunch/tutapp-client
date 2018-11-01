@@ -329,13 +329,13 @@ export const createProgram = (data, callback) => async dispatch => {
         let tokenStr = localStorage.getItem('token');
 
         dispatch(showLoading());
-        await axios.post(webApiUrl, data, {
+        await axios.post(webApiUrl, {
             headers: {
                 "Authorization" : `Bearer ${tokenStr}`,
                 "Content-Type" : `application/x-www-form-urlencoded`,
                 "Accept" : `application/json`
             } 
-        });
+        },data);
 
         callback();
     } catch (e) {
