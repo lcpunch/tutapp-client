@@ -74,7 +74,11 @@ export const fetchAllPrograms = () => async dispatch => {
 
         dispatch(showLoading());
 
-        const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        const response = await axios.get(webApiUrl, { headers: {
+            "Authorization" : `Bearer ${tokenStr}`,
+            "Content-Type" : `application/x-www-form-urlencoded`,
+            "Accept" : `application/json`
+        } });
 
         var array = response.data.filter((obj, pos, arr) => {
             return arr.map(mapObj => mapObj['id']).indexOf(obj['id']) === pos;
