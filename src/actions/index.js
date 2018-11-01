@@ -127,7 +127,7 @@ export const fetchUser = (id) => async dispatch => {
 
         var response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
 
-        webApiUrl = SERVER+'/api/programs/';
+        webApiUrl = SERVER+'/api/programs/-1';
 
         const responsePrograms = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
 
@@ -185,7 +185,7 @@ export const fetchCourse = (id) => async dispatch => {
 
         var response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
 
-        webApiUrl = SERVER+'/api/programs/';
+        webApiUrl = SERVER+'/api/programs/-1';
 
         const responsePrograms = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
 
@@ -289,7 +289,7 @@ export const deleteCourse = data => async dispatch => {
             headers: {"Authorization" : `Bearer ${tokenStr}`}
         });
 
-        webApiUrl = SERVER+'/api/courses/';
+        webApiUrl = SERVER+'/api/courses/-1';
         let response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
         dispatch({ type: FETCH_ALL_COURSES, payload: response.data });
 
