@@ -43,7 +43,6 @@ class Programs extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state);
     return { programs: state.program.data };
 }
 

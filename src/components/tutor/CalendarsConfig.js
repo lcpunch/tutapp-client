@@ -56,7 +56,7 @@ class CalendarsConfig extends Component {
         var doc = new jspdf()
 
         if(document.getElementById('month').value !== "") {
-            axios.get('http://localhost:8000/api/tutorat/'+localStorage.getItem('user_id')+'/'+document.getElementById('month').value)
+            axios.get('http://tutapp-rs.herokuapp.com/api/tutorat/'+localStorage.getItem('user_id')+'/'+document.getElementById('month').value)
             .then((response) => {
 
                 var arrayResponse = response.data.filter((obj, pos, arr) => {
