@@ -14,7 +14,6 @@ import {
 import moment from 'moment';
 
 const SERVER = 'http://tutapp-rs.herokuapp.com';
-
 // const SERVER = 'http://localhost:8000';
 
 export const signin = (formProps, callback) => async dispatch => {
