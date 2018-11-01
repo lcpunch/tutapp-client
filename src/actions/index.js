@@ -13,8 +13,8 @@ import {
  } from './types';
 import moment from 'moment';
 
-// const SERVER = 'https://tutapp-rs.herokuapp.com';
-const SERVER = 'http://localhost:8000';
+const SERVER = 'https://tutapp-rs.herokuapp.com';
+// const SERVER = 'http://localhost:8000';
 
 export const signin = (formProps, callback) => async dispatch => {
     try {
