@@ -67,7 +67,7 @@ export const fetchPrograms = () => async dispatch => {
 
 export const fetchAllPrograms = () => async dispatch => {
     try {
-        let webApiUrl = SERVER+'/api/programs/';
+        let webApiUrl = SERVER+'/api/userprograms/-1';
         let tokenStr = localStorage.getItem('token');
 
         dispatch(showLoading());
