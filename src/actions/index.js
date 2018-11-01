@@ -87,7 +87,7 @@ export const fetchAllPrograms = () => async dispatch => {
 export const fetchAllCourses = () => async dispatch => {
     try {
 
-        let webApiUrl = SERVER+'/api/courses/';
+        let webApiUrl = SERVER+'/api/courses/c';
         let tokenStr = localStorage.getItem('token');
 
         dispatch(showLoading());
