@@ -121,6 +121,23 @@ export const fetchAllUsers = () => async dispatch => {
 };
 
 
+export const associateTutor = (user, course, callback) => async dispatch => {
+    try {
+
+        let webApiUrl = SERVER+'/api/tutorat/addtutor/'+course+'/'+user;
+        let tokenStr = localStorage.getItem('token');
+
+        dispatch(showLoading());
+
+        await axios.post(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+
+        callback('/createPrograms');
+    } catch (e) {
+        dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+    }
+    dispatch(hideLoading());
+};
+
 export const fetchProgram = (id) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/programs/'+id;
@@ -181,9 +198,6 @@ export const fetchUser = (id) => async dispatch => {
         });
 
         response.data.listprograms = array;
-
-        console.log(response.data);
-
         dispatch({ type: PROFILE_DATA, payload: response.data });
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
@@ -396,14 +410,15 @@ export const fetchTutors = (id) => async dispatch => {
 
 export const fetchCalendars = (id) => async dispatch => {
     try {
-        let webApiUrl = SERVER+'/api/calendar/'+localStorage.getItem('user_id')+'/tutor';
+        let webApiUrl = SERVER+'/api/calendar/'+id+'/tutor';
         let tokenStr = localStorage.getItem('token');
 
         dispatch(showLoading());
 
         const response = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`}});
 
-        console.log(response);
+        console.log(webApiUrl);
+        
         dispatch({ type: LIST_CALENDARS, payload: response.data });
 
     } catch (e) {

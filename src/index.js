@@ -33,6 +33,7 @@ import CreateUser from './components/student/CreateUser';
 import EditProfile from './components/student/EditProfile';
 import ImportStudents from './components/student/ImportStudents';
 import AssociatePrograms from './components/admin/AssociatePrograms';
+import AssociateTutors from './components/admin/AssociateTutors';
 
 const store = createStore(reducers, {
     auth: { authenticated: localStorage.getItem('token'),
@@ -67,6 +68,7 @@ ReactDOM.render(
         <Route path="/signout" component={Signout} />
         <Route path="/importStudents" component={ImportStudents} />
         <Route path="/createTuteurs" component={AssociatePrograms} />
+        <Route path="/listTutors/:id" component={AssociateTutors} />
       </App>
     </BrowserRouter>
   </Provider>

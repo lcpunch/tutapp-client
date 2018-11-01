@@ -9,13 +9,27 @@ import './ProgramStyle.css';
 
 class Courses extends Component { 
 
+    constructor(props, context) {
+        super(props, context);
+        this.getRoute = this.getRoute.bind(this);
+        this.renderCourse = this.renderCourse.bind(this);
+    }
+
     componentWillMount() {
         this.props.fetchCourses(this.props.match.params.id);
     }
 
+    getRoute(id) {
+        
+        if(localStorage.user_role === '1') {
+            return "/listTutors/"+id;
+        }
+        return "/courses/"+id;
+    }
+
     renderCourse(course) {
         return(
-            <Link to={"/courses/"+course.id} key={course.id}>
+            <Link to={this.getRoute(course.id)} key={course.id}>
                 <div className="list-group-item list-group-item-action card card-block" key={course.id}>
                     <h4 className="card-title">{course.title}</h4>
                 </div>

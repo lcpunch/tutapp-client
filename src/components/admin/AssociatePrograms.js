@@ -23,9 +23,6 @@ class Programs extends Component {
     }
 
     render() {
-
-
-
         if(!Array.isArray(this.props.programs) || this.props.programs.length < 1) {
             return <div>Loading...</div>;
         }

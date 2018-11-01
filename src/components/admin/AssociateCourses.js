@@ -13,7 +13,7 @@ class Courses extends Component {
 
     renderCourse(course) {
         return(
-            <Link to={"/courses/"+course.id} key={course.id}>
+            <Link to={"/listTutors/"+course.id} key={course.id}>
                 <div className="list-group-item list-group-item-action card card-block" key={course.id}>
                     <h4 className="card-title">{course.title}</h4>
                 </div>
