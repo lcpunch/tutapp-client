@@ -47,7 +47,6 @@ export const signin = (formProps, callback) => async dispatch => {
 
 export const fetchPrograms = () => async dispatch => {
     try {
-
         let webApiUrl = SERVER+'/api/userprograms/'+localStorage.getItem('user_id');
         let tokenStr = localStorage.getItem('token');
 
