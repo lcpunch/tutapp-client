@@ -326,9 +326,16 @@ export const deleteUser = (data, callback) => async dispatch => {
 export const createProgram = (data, callback) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/programs/save';
+        let tokenStr = localStorage.getItem('token');
 
         dispatch(showLoading());
-        await axios.post(webApiUrl, data);
+        await axios.post(webApiUrl, data, {
+            headers: {
+                "Authorization" : `Bearer ${tokenStr}`,
+                "Content-Type" : `application/x-www-form-urlencoded`,
+                "Accept" : `application/json`
+            } 
+        });
 
         callback();
     } catch (e) {
