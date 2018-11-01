@@ -48,7 +48,7 @@ class CreateUsers extends Component {
             <div className="container">
                 <h3 className="mt-3">Utilisateurs:</h3>
                 <p>Liste de utilisateurs disponibles</p>
-                <Link className="btn btn-primary" to="/createUser">Créer un utilizateur</Link>
+                <Link className="btn btn-primary" to="/createUser">Créer un utilisateur</Link>
                 <br /><br />
                 <div className="list-group">
                     {this.props.programs.map(this.renderProgram)}

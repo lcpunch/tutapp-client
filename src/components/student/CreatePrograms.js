@@ -10,7 +10,7 @@ import '../Styles.css';
 class CreatePrograms extends Component {
 
     componentDidMount() {
-         this.props.fetchAllPrograms();
+         this.props.fetchPrograms();
     }
 
     constructor(props, context) {
