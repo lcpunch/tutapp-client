@@ -13,7 +13,7 @@ import {
  } from './types';
 import moment from 'moment';
 
-const SERVER = 'https://tutapp-rs.herokuapp.com';
+const SERVER = 'http://tutapp-rs.herokuapp.com';
 
 // const SERVER = 'http://localhost:8000';
 
@@ -330,16 +330,9 @@ export const deleteUser = (data, callback) => async dispatch => {
 export const createProgram = (data, callback) => async dispatch => {
     try {
         let webApiUrl = SERVER+'/api/programs/save';
-        let tokenStr = localStorage.getItem('token');
 
         dispatch(showLoading());
-        await axios.post(webApiUrl, {
-            headers: {
-                "Authorization" : `Bearer ${tokenStr}`,
-                "Content-Type" : `application/x-www-form-urlencoded`,
-                "Accept" : `application/json`
-            } 
-        },data);
+        await axios.post(webApiUrl, data);
 
         callback();
     } catch (e) {
